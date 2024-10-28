@@ -24,20 +24,22 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("/auth")
 public class AuthenticationRestController {
 
+    private static final String ENCODING = StandardCharsets.UTF_8.toString();
+
     private static final String CLIENT_ID = "d524fc41ac744eb6878f3a1d29c71f70";
 
     private static final String CLIENT_SECRET = "4c47e069aaed46cdb10f875d2e3dabc5";
 
-    private static final String REDIRECT_URI = "http://127.0.0.1:8080/auth/callback";
+    private static final String REDIRECT_URI = "http://localhost:8080/auth/callback";
 
     @GetMapping("/login")
     public RedirectView login() throws Exception {
         String targetUrl = "https://accounts.spotify.com/authorize"
-                + "?client_id=" + URLEncoder.encode(CLIENT_ID, StandardCharsets.UTF_8.toString())
-                + "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, StandardCharsets.UTF_8.toString())
-                + "&response_type=" + URLEncoder.encode("code", StandardCharsets.UTF_8.toString())
-                + "&scope=" + URLEncoder.encode("streaming user-read-email user-read-private", StandardCharsets.UTF_8.toString())
-                + "&state=" + URLEncoder.encode(generateState(), StandardCharsets.UTF_8.toString());
+                + "?client_id=" + URLEncoder.encode(CLIENT_ID, ENCODING)
+                + "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, ENCODING)
+                + "&response_type=" + URLEncoder.encode("code", ENCODING)
+                + "&scope=" + URLEncoder.encode("streaming user-read-email user-read-private", ENCODING)
+                + "&state=" + URLEncoder.encode(generateState(), ENCODING);
 
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(targetUrl);
@@ -45,8 +47,9 @@ public class AuthenticationRestController {
     }
 
     @GetMapping("/callback")
-    public String callback(@RequestParam("code") String code,
-                           @RequestParam("state") String state) throws Exception {
+    public String callback(@RequestParam("code") String code) {
+        SslUtils.disableSSLCertificateChecking();
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -57,13 +60,11 @@ public class AuthenticationRestController {
         requestBody.add("client_id", CLIENT_ID);
         requestBody.add("client_secret", CLIENT_SECRET);
 
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
-
         RestTemplate restTemplate = createRestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(
-                "https://accounts.spotify.com/api/token ",
+                "https://accounts.spotify.com/api/token",
                 HttpMethod.POST,
-                requestEntity,
+                new HttpEntity<>(requestBody, headers),
                 String.class
         );
 
@@ -85,4 +86,5 @@ public class AuthenticationRestController {
 
         return new RestTemplate(requestFactory);
     }
+
 }
