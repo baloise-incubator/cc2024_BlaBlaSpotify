@@ -1,38 +1,58 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>My Radio</title>
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>My Web Radio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@baloise/ds-styles/css/all.css" />
     <link rel="stylesheet" href="./radio.css">
-  </head>
-  <body>
-    <h1>Stream a radio!</h1>
-    
-    <div>
-        <h2>Player</h2>
-        <div>
-            <p id="status">&ndash;</p>
-            <audio
-                id="player"
-                src="http://stream.srg-ssr.ch/m/drs3/mp3_128"
-                onplay="setPlayerStatus('Playing')"
-                onpause="setPlayerStatus('Paused')"
-            />
-        </div>
-        <div>
-            <button onclick="startPlayback()">Start</button>
-            <button onclick="stopPlayback()">Stop</button>
-        </div>
-    </div>
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@baloise/ds-core/dist/baloise-design-system/baloise-design-system.esm.js"></script>
+    <script nomodule
+        src="https://cdn.jsdelivr.net/npm/@baloise/ds-core/dist/baloise-design-system/baloise-design-system.js"></script>
+    <script src="./radio.js"></script>
+</head>
 
-    <diV>
-        <h2>Stations</h2>
+<body>
+    <bal-app class="has-sticky-footer">
+        <header>
+            <bal-navbar interface="simple" light="true">
+                <bal-navbar-brand logo="./radio.png">My Radio</bal-navbar-brand>
+            </bal-navbar>
+        </header>
 
-        <form>
+        <main class="container mt-xx-large">
+            <div class="grid">
+                <div class="col is-on-third">
+                    <bal-card>
+                        <bal-card-title>Player</bal-card-title>
+                        <bal-card-content>
+                            <div>
+                                <bal-text id="status" bold="true">&ndash;</bal-text>
+                                <audio id="player" src="http://stream.srg-ssr.ch/m/drs3/mp3_128"
+                                    onplay="setPlayerStatus('Playing')" onpause="setPlayerStatus('Paused')"></audio>
+                                <div>
+                                    <bal-button onclick="startPlayback()" size="small">Start</bal-button>
+                                    <bal-button onclick="stopPlayback()" size="small">Stop</bal-button>
+                                </div>
+                            </div>
+                        </bal-card-content>
+                    </bal-card>
+                </div>
 
-        </form>
-    </diV>
+                <div class="col is-two-thirds">
+                    <bal-card>
+                        <bal-card-title>Stations</bal-card-title>
+                        <bal-card-content>
+                            Here the stations will be
+                        </bal-card-content>
+                    </bal-card>
+                </div>
+            </div>
+        </main>
+    </bal-app>
+</body>
 
-    <script src="./radio.js"/>
-  </body>
 </html>
