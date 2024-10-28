@@ -26,18 +26,12 @@
         <main class="container mt-xx-large">
             <div class="grid">
                 <div class="col is-on-third">
-                    <bal-card>
+                    <bal-card color="green-light">
                         <bal-card-title>Player</bal-card-title>
                         <bal-card-content>
-                            <div>
-                                <bal-text id="status" bold="true">&ndash;</bal-text>
                                 <audio id="player" src="http://stream.srg-ssr.ch/m/drs3/mp3_128"
-                                    onplay="setPlayerStatus('Playing')" onpause="setPlayerStatus('Paused')"></audio>
-                                <div>
-                                    <bal-button onclick="startPlayback()" size="small">Start</bal-button>
-                                    <bal-button onclick="stopPlayback()" size="small">Stop</bal-button>
-                                </div>
-                            </div>
+                                onplay="setPlayerStatus('Pause')" onpause="setPlayerStatus('Wiedergabe')"></audio>
+                            <bal-button id="play-button" onclick="togglePlayback()">Wiedergabe</bal-button>
                         </bal-card-content>
                     </bal-card>
                 </div>
