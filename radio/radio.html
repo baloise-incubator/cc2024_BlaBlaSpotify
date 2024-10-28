@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Radio</title>
+    <link rel="stylesheet" href="./radio.css">
+  </head>
+  <body>
+    <h1>Stream a radio!</h1>
+    
+    <div>
+        <h2>Player</h2>
+        <div>
+            <p id="status">&ndash;</p>
+            <audio
+                id="player"
+                src="http://stream.srg-ssr.ch/m/drs3/mp3_128"
+                onplay="setPlayerStatus('Playing')"
+                onpause="setPlayerStatus('Paused')"
+            />
+        </div>
+        <div>
+            <button onclick="startPlayback()">Start</button>
+            <button onclick="stopPlayback()">Stop</button>
+        </div>
+    </div>
+
+    <diV>
+        <h2>Stations</h2>
+
+        <form>
+
+        </form>
+    </diV>
+
+    <script src="./radio.js"/>
+  </body>
+</html>
