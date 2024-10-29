@@ -1,5 +1,6 @@
 package com.baloise.springtutorialbackend;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -10,13 +11,25 @@ import java.net.Proxy;
 
 @Configuration
 public class ProxyRestTemplateConfig {
+
+    @Value("${rest.proxy.url}")
+    private String proxyUrl;
+
     @Bean
     public RestTemplate createRestTemplate() {
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 8888));
-        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        requestFactory.setProxy(proxy);
+        if (this.proxyUrl.isBlank()) {
+            return new RestTemplate();
+        } else {
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, getProxyAddress());
+            SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+            requestFactory.setProxy(proxy);
 
-        return new RestTemplate(requestFactory);
+            return new RestTemplate(requestFactory);
+        }
     }
 
+    private InetSocketAddress getProxyAddress() {
+        String[] urlParts = this.proxyUrl.split(":", 2);
+        return new InetSocketAddress(urlParts[0], Integer.parseInt(urlParts[1]));
+    }
 }
