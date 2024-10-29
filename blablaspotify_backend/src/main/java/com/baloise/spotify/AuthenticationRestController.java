@@ -85,6 +85,7 @@ public class AuthenticationRestController {
 
     @GetMapping("/token")
     public String token() {
+        System.out.println(authenticationStore.getJwtToken());
         return authenticationStore.getJwtToken();
     }
 

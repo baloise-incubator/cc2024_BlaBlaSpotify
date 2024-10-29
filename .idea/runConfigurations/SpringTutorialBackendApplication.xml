@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SpringTutorialBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-    <module name="spring-tutorial-backend" />
+    <module name="blablaspotify_backend" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.baloise.springtutorialbackend.SpringTutorialBackendApplication" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="true" />

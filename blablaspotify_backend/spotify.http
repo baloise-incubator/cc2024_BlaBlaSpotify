@@ -1,7 +1,7 @@
 GET http://www.sbb.ch
 
 > {%
-  client.global.set("token", "BQDRBmMW2omIm-QOVsJJMDtKTZxQvEei1v2SmxgVm6QzOv9ZieraA9iM_OIYMG1LX6tdcbwCnF8sTgCLcC8FvpkSplfs9KKQamJRVpr81d-tgtCCHGD8G4LMoiCI581ggCD3Mrd1N-7NX1TTU_hfEAF8jpDTG-KzNjI3QwYF7ykMvjqsLAZmSB4pBeD4YVh9x-rPE5Cn2hpCqEYLVdJYFvco");
+  client.global.set("token", "BQAyIdfWwyFtoZMmjfWKZa4yw7BGXKSTat9IC_sfcu9T70otTw1Mj5ysqBE2IxnZ2yoBnmk8CnPOCZMJ6_6I7aY8JeEYkCP3DFpv27kpjwzCGmtOYoSX77KGmvYvNfZxV43Dvk5f_NQXYyB629v_Nf76UtiLG0rM4WehfwalWM8RG9mD_o75FwJzwPYubjIlGxkvIjKRQjVrsuYyscoQSY5S");
 %}
 
 ###
@@ -41,13 +41,13 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "device_ids": ["cdf1cbae56ca8c3edfac618d67391b285fdd3b78"],
+  "device_ids": ["367876aebfb8d523fe095e41a491917ee2b75637"],
   "play": true
 }
 
 
 ###
-PUT https://api.spotify.com/v1/me/player/play?device_id=cdf1cbae56ca8c3edfac618d67391b285fdd3b78
+PUT https://api.spotify.com/v1/me/player/play?device_id=367876aebfb8d523fe095e41a491917ee2b75637
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
