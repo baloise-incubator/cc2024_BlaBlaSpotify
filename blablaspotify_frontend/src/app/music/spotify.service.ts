@@ -1,21 +1,29 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+
+declare global {
+  interface Window {
+    onSpotifyWebPlaybackSDKReady: () => void;
+    Spotify: any;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpotifyService {
 
-  isAuthorized= false;
+  isAuthorized = false;
 
-  accessToken = undefined;
-  avatarUrl = undefined;
+  accessToken: string = '';
+  avatarUrl: string = '';
+  player: any;
 
   constructor(private httpClient: HttpClient) {
     this.init()
   }
 
-  private init() {
+  init() {
     this.httpClient.get('/api/spotify/auth/token').subscribe({
       next: (data: any) => {
         if (data) {
@@ -43,5 +51,25 @@ export class SpotifyService {
         console.error(error);
       }
     });
+  }
+
+  play() {
+    this.player.resume()
+  }
+
+  pause() {
+    this.player.pause()
+  }
+
+  initPlayer() {
+    this.player = new window.Spotify.Player({
+      name: 'CodeCamp Player',
+      getOAuthToken: (cb: (token: string) => void) => {
+        cb(this.accessToken);
+      },
+      volume: 0.5
+    });
+    this.player.connect();
+    this.play();
   }
 }
