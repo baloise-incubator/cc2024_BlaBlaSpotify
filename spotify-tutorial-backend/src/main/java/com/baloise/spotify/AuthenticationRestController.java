@@ -7,7 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -33,6 +30,7 @@ public class AuthenticationRestController {
     private static final String REDIRECT_URI = "http://localhost:8080/spotify/auth/callback";
 
     private final AuthenticationStore authenticationStore;
+    private final RestTemplate restTemplate;
 
     @GetMapping("/login")
     public RedirectView login() throws Exception {
@@ -62,7 +60,6 @@ public class AuthenticationRestController {
         requestBody.add("client_id", CLIENT_ID);
         requestBody.add("client_secret", CLIENT_SECRET);
 
-        RestTemplate restTemplate = createRestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(
                 "https://accounts.spotify.com/api/token",
                 HttpMethod.POST,
@@ -71,7 +68,7 @@ public class AuthenticationRestController {
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            authenticationStore.setAccessToken(response.getBody());
+            authenticationStore.setJwtToken(response.getBody());
 
             RedirectView redirectView = new RedirectView();
             redirectView.setUrl("http://localhost:4200");
@@ -83,19 +80,12 @@ public class AuthenticationRestController {
 
     @GetMapping("/token")
     public String token() {
-        return authenticationStore.getAccessToken();
+        return authenticationStore.getJwtToken();
     }
 
     private String generateState() {
         return "could-be-more-random-than-this";
     }
 
-    private RestTemplate createRestTemplate() {
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 8888));
-        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        requestFactory.setProxy(proxy);
-
-        return new RestTemplate(requestFactory);
-    }
 
 }

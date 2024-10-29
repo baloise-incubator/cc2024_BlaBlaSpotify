@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 
 @Injectable({
@@ -9,6 +9,7 @@ export class SpotifyService {
   isAuthorized= false;
 
   accessToken = undefined;
+  avatarUrl = undefined;
 
   constructor(private httpClient: HttpClient) {
     this.init()
@@ -20,6 +21,7 @@ export class SpotifyService {
         if (data) {
           this.accessToken = data.access_token;
           this.isAuthorized = true;
+          this.initAvatarUrl();
         }
       },
       error: (error) => {
@@ -32,7 +34,14 @@ export class SpotifyService {
     window.location.href = '/api/spotify/auth/login';
   }
 
-  getAvatar() {
-    return "";
+  private initAvatarUrl() {
+    this.httpClient.get('/api/spotify/avatar-url').subscribe({
+      next: (data: any) => {
+        this.avatarUrl = data.url;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }
