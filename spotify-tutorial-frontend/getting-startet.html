@@ -8,12 +8,13 @@
 <h1>Spotify Web Playback SDK Quick Start</h1>
 <button id="togglePlay">Toggle Play</button>
 <button id="next">Next</button>
+<button id="transferPlaylist">TransferPlaylist</button>
 
 
 <script src="https://sdk.scdn.co/spotify-player.js"></script>
 <script>
     window.onSpotifyWebPlaybackSDKReady = () => {
-        const token = 'BQDj0c3QN-aMzT12LNTRhHrKwcA1B_ETNROlwHtHdPdqyuMxCS2xIanEJhZx6LQ-l2DthqDBPC2tb55oMEfZGlULoLoLpUvf1XbRpz86n8fqKMuH_do-6kSXKgpErAmPSwpu2uppStXiIJN5vH07bZf2X4bXoV8odN_PVyBOH54mpkhW5p7sA7wiqox9GHoIR1beazoRGF4';
+        const token = 'BQA9uG7ggCgnTJnVyiqBd_XjS8b4p94ZjUabWVPZ98rBRkfjebaitJbky40ZULJU9cJJtFcfVGAmKMoaHtH0c28rJDrWjSVtQtwW-kr3D1RspD2EH57GhfZbzGg5a60qc1HQ71rwuhjkjKCtTg99-mdzB_qatBCR8Cv4K5-x_y05fm7g6CV-2h9plDGAfradTVqToQJs';
         const player = new Spotify.Player({
             name: 'CodeCamp Player',
             getOAuthToken: cb => {
@@ -54,6 +55,13 @@
                 console.log('Skipped to next track!');
             });
         };
+
+        document.getElementById('transferPlaylist').onclick = function () {
+            player.nextTrack().then(() => {
+                console.log('Skipped to next track!');
+            });
+        };
+
 
         player.connect();
     }

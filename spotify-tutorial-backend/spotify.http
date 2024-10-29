@@ -1,0 +1,57 @@
+GET http://www.sbb.ch
+
+> {%
+  client.global.set("token", "BQDRBmMW2omIm-QOVsJJMDtKTZxQvEei1v2SmxgVm6QzOv9ZieraA9iM_OIYMG1LX6tdcbwCnF8sTgCLcC8FvpkSplfs9KKQamJRVpr81d-tgtCCHGD8G4LMoiCI581ggCD3Mrd1N-7NX1TTU_hfEAF8jpDTG-KzNjI3QwYF7ykMvjqsLAZmSB4pBeD4YVh9x-rPE5Cn2hpCqEYLVdJYFvco");
+%}
+
+###
+GET https://api.spotify.com/v1/me
+Authorization: Bearer {{token}}
+
+> {%
+    client.global.set("userId", response.body.id);
+    client.log("userId=" + client.global.get("userId"))
+%}
+
+###
+GET https://api.spotify.com/v1/me/playlists
+Authorization: Bearer {{token}}
+
+> {%
+    client.global.set("playlist", response.body.items[0].id);
+    client.log("playlist=" + client.global.get("playlist"))
+%}
+
+###
+GET https://api.spotify.com/v1/playlists/{{playlist}}
+Authorization: Bearer {{token}}
+
+###
+GET https://api.spotify.com/v1/me/player/devices
+Authorization: Bearer {{token}}
+
+> {%
+    client.global.set("playerId", response.body.devices[0].id);
+    client.log("playerId=" + client.global.get("playerId"))
+%}
+
+###
+PUT https://api.spotify.com/v1/me/player
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "device_ids": ["cdf1cbae56ca8c3edfac618d67391b285fdd3b78"],
+  "play": true
+}
+
+
+###
+PUT https://api.spotify.com/v1/me/player/play?device_id=cdf1cbae56ca8c3edfac618d67391b285fdd3b78
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "context_uri": "spotify:playlist:{{playlist}}",
+  "play": true
+}

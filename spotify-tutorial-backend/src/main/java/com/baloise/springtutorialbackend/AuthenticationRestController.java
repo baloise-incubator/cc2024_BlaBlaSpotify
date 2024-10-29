@@ -38,7 +38,7 @@ public class AuthenticationRestController {
                 + "?client_id=" + URLEncoder.encode(CLIENT_ID, ENCODING)
                 + "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, ENCODING)
                 + "&response_type=" + URLEncoder.encode("code", ENCODING)
-                + "&scope=" + URLEncoder.encode("streaming user-read-email user-read-private", ENCODING)
+                + "&scope=" + URLEncoder.encode("user-modify-playback-state user-read-playback-state streaming user-read-email user-read-private playlist-read-private", ENCODING)
                 + "&state=" + URLEncoder.encode(generateState(), ENCODING);
 
         RedirectView redirectView = new RedirectView();
