@@ -6,13 +6,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.3.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.baloise</groupId>
-    <artifactId>spring-tutorial-backend</artifactId>
+    <artifactId>blablaspotify_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-tutorial-backend</name>
-    <description>spring-tutorial-backend</description>
+    <name>blablaspotify_backend</name>
     <url/>
     <licenses>
         <license/>
