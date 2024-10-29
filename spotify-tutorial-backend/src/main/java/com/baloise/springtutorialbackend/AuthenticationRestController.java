@@ -1,5 +1,6 @@
 package com.baloise.springtutorialbackend;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,15 +23,15 @@ import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthenticationRestController {
 
     private static final String ENCODING = StandardCharsets.UTF_8.toString();
-
     private static final String CLIENT_ID = "d524fc41ac744eb6878f3a1d29c71f70";
-
     private static final String CLIENT_SECRET = "4c47e069aaed46cdb10f875d2e3dabc5";
-
     private static final String REDIRECT_URI = "http://localhost:8080/auth/callback";
+
+    private final AuthenticationStore authenticationStore;
 
     @GetMapping("/login")
     public RedirectView login() throws Exception {
@@ -47,7 +48,7 @@ public class AuthenticationRestController {
     }
 
     @GetMapping("/callback")
-    public String callback(@RequestParam("code") String code) {
+    public RedirectView callback(@RequestParam("code") String code) {
         SslUtils.disableSSLCertificateChecking();
 
         HttpHeaders headers = new HttpHeaders();
@@ -69,10 +70,19 @@ public class AuthenticationRestController {
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            authenticationStore.setAccessToken(response.getBody());
+
+            RedirectView redirectView = new RedirectView();
+            redirectView.setUrl("http://localhost:4200");
+            return redirectView;
         } else {
             throw new RuntimeException();
         }
+    }
+
+    @GetMapping("/token")
+    public String token() {
+        return authenticationStore.getAccessToken();
     }
 
     private String generateState() {

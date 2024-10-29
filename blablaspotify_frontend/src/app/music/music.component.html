@@ -1,1 +1,9 @@
-<p>music works!</p>
+<div *ngIf="!spotifyService.isAuthorized">
+    <button (click)="spotifyService.authorize()">Authorize Spotify</button>
+</div>
+
+<div *ngIf="spotifyService.isAuthorized">
+    <img src="{{spotifyService.getAvatar()}}">
+</div>
+
+
