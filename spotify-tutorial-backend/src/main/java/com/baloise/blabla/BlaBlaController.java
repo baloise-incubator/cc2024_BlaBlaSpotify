@@ -1,35 +1,43 @@
 package com.baloise.blabla;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import java.util.Map;
 
-record RadioStation(String name, String epgId) {}
+import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+import java.util.List;
+
+record RadioStation(String name, String epgId, String streamUri) {}
+
+record RadioStationDto(String title, String epgId, String imageUrl, String imageTitle) {}
 
 @RestController
 @RequestMapping("/blabla")
+@RequiredArgsConstructor
 public class BlaBlaController {
 
-    @Value("${blabla.consumer_key}")
-    private String consumerKey;
+    private final SrfBackend srfBackend;
 
-    @Value("${blabla.consumer_secret}")
-    private String consumerSecret;
-
-    // "srf-1", "srf-2", "srf-2-kultur", "srf-3", "srf-4", "srf-musikwelle", "srf-virus"
-    private final Map<Integer, RadioStation> STATIONS = Map.of(
-        1, new RadioStation("SRF 1", "srf-1"),
-        2, new RadioStation("SRF 2", "srf-2"),
-        3, new RadioStation("SRF 2 Kultur", "srf-2-kultur"),
-        4, new RadioStation("SRF 4", "srf-4"),
-        5, new RadioStation("SRF Musikwelle", "srf-musikwelle"),
-        6, new RadioStation("SRF Virus", "srf-virus")
+    private final Map<String, String> STATION_TITLE_TO_EPG = Map.of(
+        "Radio SRF 1", "srf-1",
+        "Radio SRF 2 Kultur", "srf-2-kultur",
+        "Radio SRF 3", "srf-3",
+        "Radio SRF 4 News", "srf-4",
+        "Radio SRF Musikwelle", "srf-musikwelle",
+        "Radio SRF Virus", "srf-virus"
     );
 
     @GetMapping("/stations")
-    public Map<Integer, RadioStation> stations() {
-        return this.STATIONS;
+    public List<RadioStationDto> stations() throws Exception {
+        return this.srfBackend.getStations().stream()
+            .filter(station -> station.transmission().equals("RADIO"))
+            .map(station -> new RadioStationDto(
+                station.title(),
+                this.STATION_TITLE_TO_EPG.getOrDefault(station.title(), ""),
+                station.imageUrl(),
+                station.imageTitle()))
+            .toList();
     }
 }
