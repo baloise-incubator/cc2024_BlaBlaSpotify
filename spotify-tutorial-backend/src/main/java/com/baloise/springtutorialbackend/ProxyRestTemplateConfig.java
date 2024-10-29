@@ -29,7 +29,7 @@ public class ProxyRestTemplateConfig {
     }
 
     private InetSocketAddress getProxyAddress() {
-        String[] urlParts = this.proxyUrl.split(":", 2);
+        String[] urlParts = this.proxyUrl.split("://", 2)[1].split(":");
         return new InetSocketAddress(urlParts[0], Integer.parseInt(urlParts[1]));
     }
 }

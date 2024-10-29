@@ -2,6 +2,7 @@ package com.baloise.spotify;
 
 import com.baloise.springtutorialbackend.SslUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,9 +26,13 @@ import java.nio.charset.StandardCharsets;
 public class AuthenticationRestController {
 
     private static final String ENCODING = StandardCharsets.UTF_8.toString();
-    private static final String CLIENT_ID = "d524fc41ac744eb6878f3a1d29c71f70";
-    private static final String CLIENT_SECRET = "4c47e069aaed46cdb10f875d2e3dabc5";
     private static final String REDIRECT_URI = "http://localhost:8080/spotify/auth/callback";
+
+    @Value("${music.spotify.client_id}")
+    private String clientId;
+
+    @Value("music.spotify.client_secret}")
+    private String clientSecret;
 
     private final AuthenticationStore authenticationStore;
     private final RestTemplate restTemplate;
@@ -35,7 +40,7 @@ public class AuthenticationRestController {
     @GetMapping("/login")
     public RedirectView login() throws Exception {
         String targetUrl = "https://accounts.spotify.com/authorize"
-                + "?client_id=" + URLEncoder.encode(CLIENT_ID, ENCODING)
+                + "?client_id=" + URLEncoder.encode(clientId, ENCODING)
                 + "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, ENCODING)
                 + "&response_type=" + URLEncoder.encode("code", ENCODING)
                 + "&scope=" + URLEncoder.encode("user-modify-playback-state user-read-playback-state streaming user-read-email user-read-private playlist-read-private", ENCODING)
@@ -57,8 +62,8 @@ public class AuthenticationRestController {
         requestBody.add("grant_type", "authorization_code");
         requestBody.add("code", code);
         requestBody.add("redirect_uri", REDIRECT_URI);
-        requestBody.add("client_id", CLIENT_ID);
-        requestBody.add("client_secret", CLIENT_SECRET);
+        requestBody.add("client_id", clientId);
+        requestBody.add("client_secret", clientSecret);
 
         ResponseEntity<String> response = restTemplate.exchange(
                 "https://accounts.spotify.com/api/token",
