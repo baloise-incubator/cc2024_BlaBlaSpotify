@@ -1,0 +1,17 @@
+<header class="top_bar">
+  <mat-toolbar>
+    <span>BlaBlaSpotify</span>
+  </mat-toolbar>
+</header>
+
+<main class="grid-container">
+  <mat-grid-list cols="3" gutterSize="1.5rem">
+    <mat-grid-tile>
+      <app-player class="full"></app-player>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2">
+      <app-station-search class="full"></app-station-search>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <router-outlet />
+</main>

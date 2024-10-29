@@ -3,8 +3,20 @@ function getPlayer() {
 }
 
 function setPlayerStatus(newStatus) {
-    document.getElementById("status")
-        .innerText = newStatus;
+    document.getElementById("play-button")
+    .getElementsByTagName("button")[0]
+    .getElementsByTagName("span")[0]
+    .innerText = newStatus
+}
+
+function togglePlayback() {
+    const player = getPlayer()
+
+    if (player.paused) {
+        startPlayback()
+    } else {
+        stopPlayback()
+    }
 }
 
 function startPlayback() {

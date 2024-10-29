@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Player
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <audio id="player"
+        [src]="stationUrl()"
+        (pause)="this.isPlaying.set(false)"
+        (play)="this.isPlaying.set(true)"
+        #player></audio>
+      <button mat-flat-button (click)="togglePlayback()">{{ playButtonText() }}</button>
+    </div>
+  </mat-card-content>
+</mat-card>
