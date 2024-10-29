@@ -1,4 +1,4 @@
-package com.baloise.springtutorialbackend;
+package com.baloise.spotify;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -15,7 +15,7 @@ export class SpotifyService {
   }
 
   private init() {
-    this.httpClient.get('/api/auth/token').subscribe({
+    this.httpClient.get('/api/spotify/auth/token').subscribe({
       next: (data: any) => {
         if (data) {
           this.accessToken = data.access_token;
@@ -29,7 +29,7 @@ export class SpotifyService {
   }
 
   authorize() {
-    window.location.href = '/api/auth/login';
+    window.location.href = '/api/spotify/auth/login';
   }
 
   getAvatar() {

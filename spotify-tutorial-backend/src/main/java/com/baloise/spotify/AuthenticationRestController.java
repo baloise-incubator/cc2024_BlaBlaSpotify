@@ -1,5 +1,6 @@
-package com.baloise.springtutorialbackend;
+package com.baloise.spotify;
 
+import com.baloise.springtutorialbackend.SslUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,14 +23,14 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/spotify/auth")
 @RequiredArgsConstructor
 public class AuthenticationRestController {
 
     private static final String ENCODING = StandardCharsets.UTF_8.toString();
     private static final String CLIENT_ID = "d524fc41ac744eb6878f3a1d29c71f70";
     private static final String CLIENT_SECRET = "4c47e069aaed46cdb10f875d2e3dabc5";
-    private static final String REDIRECT_URI = "http://localhost:8080/auth/callback";
+    private static final String REDIRECT_URI = "http://localhost:8080/spotify/auth/callback";
 
     private final AuthenticationStore authenticationStore;
 
