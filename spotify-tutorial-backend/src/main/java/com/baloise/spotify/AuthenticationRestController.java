@@ -31,7 +31,7 @@ public class AuthenticationRestController {
     @Value("${music.spotify.client_id}")
     private String clientId;
 
-    @Value("music.spotify.client_secret}")
+    @Value("${music.spotify.client_secret}")
     private String clientSecret;
 
     private final AuthenticationStore authenticationStore;
