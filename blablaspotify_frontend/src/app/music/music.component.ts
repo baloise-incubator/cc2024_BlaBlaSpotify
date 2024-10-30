@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+import {JsonPipe, NgIf} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {SpotifyService} from './spotify.service';
 
@@ -6,7 +6,8 @@ import {SpotifyService} from './spotify.service';
   selector: 'app-music',
   standalone: true,
   imports: [
-    NgIf
+    NgIf,
+    JsonPipe
   ],
   templateUrl: './music.component.html',
   styleUrl: './music.component.scss'

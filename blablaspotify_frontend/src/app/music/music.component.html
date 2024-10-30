@@ -4,6 +4,7 @@
 
 <div *ngIf="spotifyService.isAuthorized">
     <img src="{{spotifyService.avatarUrl}}" style="width: 100px; height: 100px"> is logged in...
+    {{ spotifyService.playlists | json }}
 </div>
 
 

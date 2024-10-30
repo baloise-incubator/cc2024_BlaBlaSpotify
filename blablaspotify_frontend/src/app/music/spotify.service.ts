@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Playlist} from './model';
 
 declare global {
   interface Window {
@@ -18,6 +19,7 @@ export class SpotifyService {
   accessToken: string = '';
   avatarUrl: string = '';
   player: any;
+  playlists: Playlist[] = [];
 
   constructor(private httpClient: HttpClient) {
     this.init()
@@ -30,6 +32,8 @@ export class SpotifyService {
           this.accessToken = data.access_token;
           this.isAuthorized = true;
           this.initAvatarUrl();
+          this.initPlaylists();
+          console.log("");
         }
       },
       error: (error) => {
@@ -71,5 +75,22 @@ export class SpotifyService {
     });
     this.player.connect();
     this.play();
+  }
+
+  initPlaylists() {
+    this.httpClient.get('/api/spotify/playlists').subscribe({
+      next: (data: any) => {
+        this.playlists = (data as []).map((playlist: any) => {
+          let p = new Playlist();
+          p.title = playlist.name;
+          p.urn = playlist.uri;
+          p.imageUrl = playlist.images?.[0].url ?? '';
+          return p;
+        });
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }
