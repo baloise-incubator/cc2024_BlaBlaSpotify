@@ -1,7 +1,7 @@
 GET http://www.sbb.ch
 
 > {%
-  client.global.set("token", "BQAyIdfWwyFtoZMmjfWKZa4yw7BGXKSTat9IC_sfcu9T70otTw1Mj5ysqBE2IxnZ2yoBnmk8CnPOCZMJ6_6I7aY8JeEYkCP3DFpv27kpjwzCGmtOYoSX77KGmvYvNfZxV43Dvk5f_NQXYyB629v_Nf76UtiLG0rM4WehfwalWM8RG9mD_o75FwJzwPYubjIlGxkvIjKRQjVrsuYyscoQSY5S");
+  client.global.set("token", "BQADkMEvFCXrb6JdEdR0ImBvMcyR1T28n8CZvnmrRvt2MM5ctBRZuQQYpGi8iDwixhV1C2hGB7G-pzz0fth67OBqXKxYi9Jb5FazW3WaGEviMofDGjHcfAi1d6w-9Hpo_NUSRNHqnaMyCNEM6HXRrnIskUp1HoufDXVdSSWosvsI57sVrlfj_8stlFHYayjGvKNH3lEGlFFZTeouJ4ea3FBr");
 %}
 
 ###

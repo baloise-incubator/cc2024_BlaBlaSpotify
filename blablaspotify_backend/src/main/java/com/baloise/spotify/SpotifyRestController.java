@@ -58,7 +58,6 @@ public class SpotifyRestController {
         }
     }
 
-
     @GetMapping("/play")
     public void play(@RequestParam("uri") String uri) throws Exception {
         MultiValueMap<String, String> headers = createHeaders();
@@ -93,6 +92,24 @@ public class SpotifyRestController {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
             return jsonNode.get("devices").get(1).get("id").toString();
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
+    @GetMapping("/playlists")
+    public String playlists() throws Exception {
+        ResponseEntity<String> response = restTemplate.exchange(
+                "https://api.spotify.com/v1/me/playlists",
+                HttpMethod.GET,
+                new HttpEntity<>(null, createHeaders()),
+                String.class
+        );
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(response.getBody());
+            return jsonNode.get("items").toString();
         } else {
             throw new RuntimeException();
         }
