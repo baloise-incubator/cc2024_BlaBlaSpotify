@@ -29,7 +29,7 @@ export class PlayerComponent {
 
   private _radioStationFacade = inject(RadioStationFacade)
 
-  protected readonly playerElement = viewChild<ElementRef>('player')
+  protected readonly playerElement = viewChild<ElementRef<HTMLAudioElement>>('player')
 
   protected readonly selectedStation = model<string>(this._radioStationFacade.stations()[0].epgId)
 
@@ -42,17 +42,23 @@ export class PlayerComponent {
     const stationUrl = this.stationUrl()
 
     untracked(() => {
-      const player = this.playerElement()?.nativeElement as HTMLAudioElement
-      player.src = stationUrl
+      const player = this.playerElement()?.nativeElement
+      player!.src = stationUrl
 
       if (isPlaying) {
-        player.load()
-        player.play()
+        player!.load()
+        //player.play()
       } else {
-        player.pause()
+        player!.pause()
       }
     })
   })
+
+  protected startPlayBack() {
+    if (this.isActive()) {
+      this.playerElement()!.nativeElement.play()
+    }
+  }
 
   private getStreamUrl(epgId?: string) {
     const station = this._radioStationFacade.stations().find(station => station.epgId === epgId)
