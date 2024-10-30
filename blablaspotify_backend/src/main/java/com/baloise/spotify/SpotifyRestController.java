@@ -1,6 +1,8 @@
 package com.baloise.spotify;
 
 import com.baloise.spotify.api.Play;
+import com.baloise.spotify.api.Playlists;
+import com.baloise.spotify.api.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -27,17 +29,15 @@ public class SpotifyRestController {
 
     @GetMapping("/me")
     public String me() throws Exception {
-        ResponseEntity<String> response = restTemplate.exchange(
+        ResponseEntity<User> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me",
                 HttpMethod.GET,
                 new HttpEntity<>(null, createHeaders()),
-                String.class
+                User.class
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            return jsonNode.get("id").asText();
+            return response.getBody().getId();
         } else {
             throw new RuntimeException();
         }
@@ -108,18 +108,16 @@ public class SpotifyRestController {
     }
 
     @GetMapping("/playlists")
-    public String playlists() throws Exception {
-        ResponseEntity<String> response = restTemplate.exchange(
+    public Playlists playlists() throws Exception {
+        ResponseEntity<Playlists> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me/playlists",
                 HttpMethod.GET,
                 new HttpEntity<>(null, createHeaders()),
-                String.class
+                Playlists.class
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            return jsonNode.get("items").toString();
+            return response.getBody();
         } else {
             throw new RuntimeException();
         }

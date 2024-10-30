@@ -90,7 +90,7 @@ export class SpotifyService {
   initPlaylists() {
     this.httpClient.get('/api/spotify/playlists').subscribe({
       next: (data: any) => {
-        this.playlists = (data as []).map((playlist: any) => {
+        this.playlists = (data.items as []).map((playlist: any) => {
           let p = new Playlist();
           p.title = playlist.name;
           p.urn = playlist.uri;
