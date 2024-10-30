@@ -95,7 +95,12 @@ public class SpotifyRestController {
         if (response.getStatusCode().is2xxSuccessful()) {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            return jsonNode.get("devices").get(1).get("id").toString();
+            for(JsonNode device : jsonNode.get("devices")) {
+                if (device.get("name").toString().contains("CodeCamp")) {
+                    return device.get("id").toString();
+                }
+            }
+            throw new IllegalArgumentException("No device found");
         } else {
             throw new RuntimeException();
         }

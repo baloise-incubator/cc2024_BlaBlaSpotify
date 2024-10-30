@@ -28,7 +28,7 @@ import {SpotifyService} from '../spotify.service';
 })
 export class MusicPlayerComponent implements OnInit {
 
-  selectedPlaylist: Playlist | undefined;
+  selectedPlaylist: string | undefined;
   isPlaying = false;
 
   constructor(public spotifyService: SpotifyService) {
@@ -48,11 +48,15 @@ export class MusicPlayerComponent implements OnInit {
 
   pausePlayBack() {
     this.isPlaying = false;
-
   }
 
   togglePlayback() {
     this.isPlaying = !this.isPlaying;
+    if (this.isPlaying) {
+      this.spotifyService.play(this.selectedPlaylist);
+    } else {
+      this.spotifyService.pause();
+    }
   }
 
   playButtonDisabled() {

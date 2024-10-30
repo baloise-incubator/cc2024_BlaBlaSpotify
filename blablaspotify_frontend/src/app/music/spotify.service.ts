@@ -57,8 +57,19 @@ export class SpotifyService {
     });
   }
 
-  play() {
-    this.player.resume()
+  play(urn?: string | undefined) {
+    if (!urn && this.player) {
+      this.player.resume()
+    } else {
+      this.httpClient.get('/api/spotify/play?uri=' + urn).subscribe({
+        next: (data: any) => {
+          console.log('playlist started');
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
   }
 
   pause() {
@@ -74,7 +85,6 @@ export class SpotifyService {
       volume: 0.5
     });
     this.player.connect();
-    this.play();
   }
 
   initPlaylists() {
