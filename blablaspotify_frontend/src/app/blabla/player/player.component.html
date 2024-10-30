@@ -6,12 +6,23 @@
   </mat-card-header>
   <mat-card-content>
     <div>
+      <p>{{ stationUrl() }}</p>
       <audio id="player"
         [src]="stationUrl()"
-        (pause)="this.isPlaying.set(false)"
+        (pause)="onPause()"
         (play)="this.isPlaying.set(true)"
         #player></audio>
-      <button mat-flat-button (click)="togglePlayback()">{{ playButtonText() }}</button>
+      <div class="player__controls">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Blabla Sender</mat-label>
+          <mat-select [(value)]="selectedStation" (selectionChange)="pausePlayBack()">
+            @for(station of stationList(); track station.epgId) {
+              <mat-option [value]="station.epgId">{{ station.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button (click)="togglePlayback()" [disabled]="playButtonDisabled()">{{ playButtonText() }}</button>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

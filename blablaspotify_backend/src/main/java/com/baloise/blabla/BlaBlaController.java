@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 record RadioStation(String name, String epgId, String streamUri) {}
 
@@ -40,4 +42,10 @@ public class BlaBlaController {
                 station.imageTitle()))
             .toList();
     }
+
+    @GetMapping("/epg/{stationId}")
+    public String getMethodName(@RequestParam String stationId) {
+        return new String();
+    }
+    
 }

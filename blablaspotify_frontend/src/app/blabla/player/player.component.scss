@@ -1,0 +1,14 @@
+.player__controls {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+
+    mat-form-field {
+        flex-grow: 1;
+    }
+
+    button {
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+}
