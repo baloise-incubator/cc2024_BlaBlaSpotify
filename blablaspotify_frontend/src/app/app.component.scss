@@ -1,3 +1,12 @@
+main {
+    display: flex;
+    gap: 3rem;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+    }
+}
+
 .full {
     height: 100%;
     width: 100%;
