@@ -13,7 +13,7 @@
         #player></audio>
       <div class="player__controls">
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Blabla Sender</mat-label>
+          <mat-label>Sender</mat-label>
           <mat-select [(value)]="selectedStation" (selectionChange)="pausePlayBack()">
             @for(station of stationList(); track station.epgId) {
               <mat-option [value]="station.epgId">{{ station.name }}</mat-option>

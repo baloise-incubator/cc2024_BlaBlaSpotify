@@ -29,7 +29,7 @@ export class PlayerComponent {
   protected readonly stationUrl = computed(() => this.getStreamUrl(this.selectedStation()))
   protected readonly playButtonDisabled = computed(() => this.stationUrl().length == 0)
   protected readonly isPlaying = signal(false)
-  protected readonly playButtonText = computed(() => this.isPlaying() ? "Pause" : "Wiedergabe")
+  protected readonly playButtonText = computed(() => this.isPlaying() ? "Pause" : "Play")
   protected readonly stationList = computed(() => 
     this._radioStationFacade.stations().map(station => ({ epgId: station.epgId, name: station.name })))
   protected readonly selectedStation = model<string>()
