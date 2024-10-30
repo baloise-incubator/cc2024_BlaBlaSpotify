@@ -31,21 +31,19 @@ export class PlayerComponent {
 
   protected readonly playerElement = viewChild<ElementRef>('player')
 
-  protected readonly selectedStation = model<string>()
-  protected readonly playButton = signal(false)
+  protected readonly selectedStation = model<string>(this._radioStationFacade.stations()[0].epgId)
 
   protected readonly stationList = this._radioStationFacade.stations
 
   protected readonly stationUrl = computed(() => this.getStreamUrl(this.selectedStation()))
-  protected readonly playButtonDisabled = computed(() => this.stationUrl().length == 0)
-  protected readonly isPlaying = computed(() => this.isActive() && this.playButton() && !this.playButtonDisabled())
-  protected readonly playButtonText = computed(() => this.isPlaying() ? "Pause" : "Play")
 
   private _handlePlayerStatus = effect(() => {
-    const isPlaying = this.isPlaying()
+    const isPlaying = this.isActive()
+    const stationUrl = this.stationUrl()
 
     untracked(() => {
       const player = this.playerElement()?.nativeElement as HTMLAudioElement
+      player.src = stationUrl
 
       if (isPlaying) {
         player.load()
@@ -55,15 +53,6 @@ export class PlayerComponent {
       }
     })
   })
-
-  protected pausePlayBack() {
-    this.playButton.set(false)
-  }
-
-  protected togglePlayback() {
-    const current = this.playButton()
-    this.playButton.set(!current)
-  }
 
   private getStreamUrl(epgId?: string) {
     const station = this._radioStationFacade.stations().find(station => station.epgId === epgId)

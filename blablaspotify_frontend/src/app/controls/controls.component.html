@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            BlaBla-Spotify-Player
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="controls">
+            <mat-button-toggle-group name="Quelle" [value]="selectedSource()"
+                (change)="onSourceValueChange($event.value)">
+                <mat-button-toggle value="blabla">Blabla</mat-button-toggle>
+                <mat-button-toggle value="music">Spotify</mat-button-toggle>
+            </mat-button-toggle-group>
+            <button mat-fab extended (click)="onClickPlayButton()">
+                @if (isPlaying()) {
+                    <mat-icon aria-hidden="false" aria-label="Pause" fontIcon="pause"></mat-icon>
+                    } @else {
+                    <mat-icon aria-hidden="false" aria-label="Wiedergabe" fontIcon="play_arrow"></mat-icon>
+                    }
+                {{ isPlaying() ? 'Pause' : 'Wiedergabe' }}
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
