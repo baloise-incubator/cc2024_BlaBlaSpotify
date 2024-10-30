@@ -7,24 +7,10 @@ import {SpotifyService} from './spotify.service';
   selector: 'app-music',
   standalone: true,
   imports: [
-    NgIf,
-    JsonPipe,
     MusicPlayerComponent
   ],
   templateUrl: './music.component.html',
   styleUrl: './music.component.scss'
 })
-export class MusicComponent implements OnInit {
-
-  constructor(public spotifyService: SpotifyService) {
-  }
-
-  ngOnInit() {
-    let windowRef = window as any;
-    windowRef.onSpotifyWebPlaybackSDKReady = () => {
-      this.spotifyService.initPlayer();
-      console.log("inited")
-    };
-  }
-
+export class MusicComponent {
 }

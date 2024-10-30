@@ -6,17 +6,27 @@
     </mat-card-header>
     <mat-card-content>
         <div>
-            <div class="player__controls">
-<!--                <mat-form-field appearance="outline" subscriptSizing="dynamic">-->
-<!--                    <mat-label>Blabla Sender</mat-label>-->
-<!--                    <mat-select [(value)]="selectedStation" (selectionChange)="pausePlayBack()">-->
-<!--                        @for(station of stationList(); track station.epgId) {-->
-<!--                            <mat-option [value]="station.epgId">{{ station.name }}</mat-option>-->
-<!--                        }-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-<!--                <button mat-flat-button (click)="togglePlayback()" [disabled]="playButtonDisabled()">{{ playButtonText() }}</button>-->
+            <div *ngIf="!spotifyService.isAuthorized">
+                <button (click)="spotifyService.authorize()">Authorize Spotify</button>
             </div>
+
+            <div *ngIf="spotifyService.isAuthorized">
+                <img src="{{spotifyService.avatarUrl}}" style="width: 100px; height: 100px"> is logged in...
+            </div>
+
+<!--            <div>-->
+<!--                <div class="player__controls">-->
+<!--                    &lt;!&ndash;                <mat-form-field appearance="outline" subscriptSizing="dynamic">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <mat-label>Blabla Sender</mat-label>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <mat-select [(value)]="selectedStation" (selectionChange)="pausePlayBack()">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        @for(station of stationList(); track station.epgId) {&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <mat-option [value]="station.epgId">{{ station.name }}</mat-option>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        }&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </mat-select>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </mat-form-field>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <button mat-flat-button (click)="togglePlayback()" [disabled]="playButtonDisabled()">{{ playButtonText() }}</button>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </mat-card-content>
 </mat-card>
