@@ -14,20 +14,18 @@
                 <img src="{{spotifyService.avatarUrl}}" style="width: 100px; height: 100px"> is logged in...
             </div>
 
-            <div>
-                <div>
-                    <mat-form-field appearance="outline" subscriptSizing="dynamic">
-                        <mat-label>Playlists</mat-label>
-                        <mat-select [(value)]="selectedPlaylist" (selectionChange)="pausePlayBack()">
-                            @for (playlist of playlists(); track playlist.urn) {
-                                <mat-option [value]="playlist.urn">{{ playlist.title }}</mat-option>
-                            }
-                        </mat-select>
-                    </mat-form-field>
-                    <button mat-flat-button (click)="togglePlayback()"
-                            [disabled]="playButtonDisabled()">{{ playButtonText() }}
-                    </button>
-                </div>
+            <div class="player__controls">
+                <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <mat-label>Playlists</mat-label>
+                    <mat-select [(value)]="selectedPlaylist" (selectionChange)="pausePlayBack()">
+                        @for (playlist of playlists(); track playlist.urn) {
+                            <mat-option [value]="playlist.urn">{{ playlist.title }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <button mat-flat-button (click)="togglePlayback()"
+                        [disabled]="playButtonDisabled()">{{ playButtonText() }}
+                </button>
             </div>
         </div>
     </mat-card-content>
