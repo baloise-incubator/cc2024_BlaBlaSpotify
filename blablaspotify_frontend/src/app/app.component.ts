@@ -24,4 +24,9 @@ export class AppComponent {
     const controlsState = this._controlsService.playBackState()
     return controlsState.source === 'blabla' && controlsState.status === 'playing'
   })
+
+  protected isMusicActive = computed(() => {
+    const controlsState = this._controlsService.playBackState()
+    return controlsState.source === 'music' && controlsState.status === 'playing'
+  })
 }
