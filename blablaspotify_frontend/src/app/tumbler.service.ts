@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {SpotifyService} from './music/spotify.service';
+import { BlaBlaService } from './blabla/blabla-service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class TumblerService {
 
   isBlabla = false;
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(private spotifyService: SpotifyService, private blablaService: BlaBlaService) {
   }
 
   public toggle() {
@@ -26,11 +27,11 @@ export class TumblerService {
 
   public activateBlabla() {
     this.spotifyService.pause();
-    console.log('Blabla activated');
+    this.blablaService.play();
   }
 
   public activateMusic() {
     this.spotifyService.play();
-    console.log('Music activated');
+    this.blablaService.pause();
   }
 }
