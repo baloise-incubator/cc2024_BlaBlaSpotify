@@ -1,5 +1,6 @@
 package com.baloise.spotify;
 
+import com.baloise.spotify.api.Play;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -70,12 +71,12 @@ public class SpotifyRestController {
         String deviceId = deviceId().replaceAll("\"", "");
         System.out.println("Device ID: " + deviceId);
 
-        HttpEntity<String> entity = new HttpEntity<>("{\"context_uri\": [\"" + uri + "\"], \"play\": true}");
+        Play play = Play.builder().context_uri(uri).play(true).build();
         String url = "https://api.spotify.com/v1/me/player/play?device_id=" + deviceId;
         ResponseEntity<Void> response = restTemplate.exchange(
                 url,
                 HttpMethod.PUT,
-                new HttpEntity<>(new HttpEntity<>(entity), headers),
+                new HttpEntity<>(play, headers),
                 Void.class
         );
 

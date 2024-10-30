@@ -1,7 +1,7 @@
 GET http://www.sbb.ch
 
 > {%
-  client.global.set("token", "BQDuEtuHxUrc3RM5_moaXcNvLbk9gKdCLBgrHuDfXSpvo9Xv_QZWNCkP3fXG0dlQXz76c9tMSl9qbozqkLch4SrC9lTdy0p9LzcrqsXhrWGNe2n0e1jeiAoGy7G3vhLibOfMms2X4mW9Vc1Bfv5EtFyzXIgJfPsv-C7en-oa2pM6s_m4bx6Q1If4QE5P8Hk5L3Lgpm3cc9GZwIoJPElycApa");
+  client.global.set("token", "BQDtx2TcSdc7F29vAW0qzKhxG3Ae0siosMukJI1aJvQwZ_lMbzDeezv8MRiG26bkyslQsVI7N1oaZBrlj0iie-vo8UryPMqvb27aTTWBlNjODQEkHZEYvLmsdYInKMQIcNS3NYaHKtQ080u5_ywBfxnR_H27F83PE4OQWBTLLCXxz8JaQLSYYoNkSLyfBUHePXSKSWkFM8TnAoEOm0E8E4lg");
 %}
 
 ###
@@ -47,11 +47,11 @@ Content-Type: application/json
 
 
 ###
-PUT https://api.spotify.com/v1/me/player/play?device_id=50fcc774359f1df66441687f15a80090385bb1a4
+PUT https://api.spotify.com/v1/me/player/play?device_id=9f48ccb7f208758c9dba12617684d5c3ed62668d
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "context_uri": "spotify:playlist:3kVBqAdLG14cOeoI2W10gq",
+  "context_uri": "spotify:playlist:4BgOn9TIlbWK56DTssFrNS",
   "play": true
 }
