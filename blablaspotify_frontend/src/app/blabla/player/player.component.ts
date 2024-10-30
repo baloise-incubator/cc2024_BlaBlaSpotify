@@ -1,4 +1,4 @@
-import { Component, computed, signal, viewChild, ElementRef, inject, model, effect, untracked } from '@angular/core';
+import { Component, computed, signal, viewChild, ElementRef, inject, model, effect, untracked, input } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { RadioStationFacade } from '../data-access/radio-station.facade';
@@ -25,36 +25,44 @@ import { MatIcon } from '@angular/material/icon';
   ]
 })
 export class PlayerComponent {
+  readonly isActive = input.required<boolean>()
+
   private _radioStationFacade = inject(RadioStationFacade)
 
   protected readonly playerElement = viewChild<ElementRef>('player')
+
+  protected readonly selectedStation = model<string>()
+  protected readonly playButton = signal(false)
+
+  protected readonly stationList = this._radioStationFacade.stations
+
   protected readonly stationUrl = computed(() => this.getStreamUrl(this.selectedStation()))
   protected readonly playButtonDisabled = computed(() => this.stationUrl().length == 0)
-  protected readonly isPlaying = signal(false)
+  protected readonly isPlaying = computed(() => this.isActive() && this.playButton() && !this.playButtonDisabled())
   protected readonly playButtonText = computed(() => this.isPlaying() ? "Pause" : "Play")
-  protected readonly stationList = computed(() => 
-    this._radioStationFacade.stations().map(station => ({ epgId: station.epgId, name: station.name })))
-  protected readonly selectedStation = model<string>()
+
+  private _handlePlayerStatus = effect(() => {
+    const isPlaying = this.isPlaying()
+
+    untracked(() => {
+      const player = this.playerElement()?.nativeElement as HTMLAudioElement
+
+      if (isPlaying) {
+        player.load()
+        player.play()
+      } else {
+        player.pause()
+      }
+    })
+  })
 
   protected pausePlayBack() {
-    (this.playerElement()?.nativeElement as HTMLAudioElement).pause()
-    this.isPlaying.set(false)
+    this.playButton.set(false)
   }
 
   protected togglePlayback() {
-    const player = this.playerElement()?.nativeElement as HTMLAudioElement
-    if (this.isPlaying()) {
-      console.log('Pause')
-      player.pause()
-    } else {
-      console.log('Play')
-      player.load()
-      player.play()
-    }
-  }
-
-  protected onPause() {
-    this.isPlaying.set(false)
+    const current = this.playButton()
+    this.playButton.set(!current)
   }
 
   private getStreamUrl(epgId?: string) {
