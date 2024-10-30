@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Playlists {
+public class PlaylistList {
 
     private String href;
     private int limit;

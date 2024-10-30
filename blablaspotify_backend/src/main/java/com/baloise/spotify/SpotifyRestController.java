@@ -1,7 +1,8 @@
 package com.baloise.spotify;
 
+import com.baloise.spotify.api.DeviceList;
 import com.baloise.spotify.api.Play;
-import com.baloise.spotify.api.Playlists;
+import com.baloise.spotify.api.PlaylistList;
 import com.baloise.spotify.api.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
 
 @RestController
 @RequestMapping("/spotify")
@@ -86,19 +85,17 @@ public class SpotifyRestController {
     }
 
     private String deviceId() throws Exception {
-        ResponseEntity<String> response = restTemplate.exchange(
+        ResponseEntity<DeviceList> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me/player/devices",
                 HttpMethod.GET,
                 new HttpEntity<>(null, createHeaders()),
-                String.class
+                DeviceList.class
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            for(JsonNode device : jsonNode.get("devices")) {
-                if (device.get("name").toString().contains("CodeCamp")) {
-                    return device.get("id").toString();
+            for(DeviceList.Device device : response.getBody().getDevices()) {
+                if (device.getName().contains("CodeCamp")) {
+                    return device.getId();
                 }
             }
             throw new IllegalArgumentException("No device found");
@@ -108,12 +105,12 @@ public class SpotifyRestController {
     }
 
     @GetMapping("/playlists")
-    public Playlists playlists() throws Exception {
-        ResponseEntity<Playlists> response = restTemplate.exchange(
+    public PlaylistList playlists() throws Exception {
+        ResponseEntity<PlaylistList> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me/playlists",
                 HttpMethod.GET,
                 new HttpEntity<>(null, createHeaders()),
-                Playlists.class
+                PlaylistList.class
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
