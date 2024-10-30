@@ -36,6 +36,7 @@ export class PlayerComponent {
 
   protected pausePlayBack() {
     (this.playerElement()?.nativeElement as HTMLAudioElement).pause()
+    this.isPlaying.set(false)
   }
 
   protected togglePlayback() {
