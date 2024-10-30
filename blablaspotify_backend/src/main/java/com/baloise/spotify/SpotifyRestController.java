@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/spotify")
 @RequiredArgsConstructor
@@ -60,19 +62,21 @@ public class SpotifyRestController {
 
     @GetMapping("/play")
     public void play(@RequestParam("uri") String uri) throws Exception {
+        System.out.println("URI: " + uri);
+
         MultiValueMap<String, String> headers = createHeaders();
         headers.add("Content-Type", "application/json");
 
-        uri = "spotify:playlist:37i9dQZF1DX05xCBTd43pw";
-        String deviceId = deviceId();
+        String deviceId = deviceId().replaceAll("\"", "");
         System.out.println("Device ID: " + deviceId);
 
-        HttpEntity<String> entity = new HttpEntity<>("{\"context_uri\": [\"" + uri + "\"], \"play\": true}", headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                "https://api.spotify.com/v1/me/player/play?device_id=" + deviceId,
+        HttpEntity<String> entity = new HttpEntity<>("{\"context_uri\": [\"" + uri + "\"], \"play\": true}");
+        String url = "https://api.spotify.com/v1/me/player/play?device_id=" + deviceId;
+        ResponseEntity<Void> response = restTemplate.exchange(
+                url,
                 HttpMethod.PUT,
                 new HttpEntity<>(new HttpEntity<>(entity), headers),
-                String.class
+                Void.class
         );
 
         if (!response.getStatusCode().is2xxSuccessful()) {
