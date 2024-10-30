@@ -1,9 +1,10 @@
 import { Component, computed, signal, viewChild, ElementRef, inject, model, effect, untracked } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { RadioStationFacade } from '../data-access/radio-station.facade';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'blabla-player',
@@ -11,7 +12,6 @@ import { MatOption, MatSelect } from '@angular/material/select';
   styleUrl: './player.component.scss',
   standalone: true,
   imports: [
-    MatButtonModule,
     MatCard,
     MatCardContent,
     MatCardHeader,
@@ -19,7 +19,9 @@ import { MatOption, MatSelect } from '@angular/material/select';
     MatFormField,
     MatLabel,
     MatSelect,
-    MatOption
+    MatOption,
+    MatIcon,
+    MatIconButton,
   ]
 })
 export class PlayerComponent {

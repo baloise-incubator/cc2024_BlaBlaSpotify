@@ -20,7 +20,13 @@
             }
           </mat-select>
         </mat-form-field>
-        <button mat-flat-button (click)="togglePlayback()" [disabled]="playButtonDisabled()">{{ playButtonText() }}</button>
+        <button mat-icon-button color="primary" (click)="togglePlayback()" [disabled]="playButtonDisabled()">
+          @if (isPlaying()) {
+            <mat-icon aria-hidden="false" aria-label="Pause" fontIcon="pause"></mat-icon>
+          } @else {
+            <mat-icon aria-hidden="false" aria-label="Wiedergabe" fontIcon="play_arrow"></mat-icon>
+          }
+        </button>
       </div>
     </div>
   </mat-card-content>
