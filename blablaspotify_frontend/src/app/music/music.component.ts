@@ -1,5 +1,6 @@
 import {JsonPipe, NgIf} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
+import {MusicPlayerComponent} from './player/music-player.component';
 import {SpotifyService} from './spotify.service';
 
 @Component({
@@ -7,7 +8,8 @@ import {SpotifyService} from './spotify.service';
   standalone: true,
   imports: [
     NgIf,
-    JsonPipe
+    JsonPipe,
+    MusicPlayerComponent
   ],
   templateUrl: './music.component.html',
   styleUrl: './music.component.scss'

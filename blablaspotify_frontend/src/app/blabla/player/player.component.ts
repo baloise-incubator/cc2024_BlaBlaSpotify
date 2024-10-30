@@ -6,7 +6,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 
 @Component({
-  selector: 'app-player',
+  selector: 'blabla-player',
   templateUrl: './player.component.html',
   styleUrl: './player.component.scss',
   standalone: true,
