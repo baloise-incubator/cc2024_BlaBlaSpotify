@@ -8,16 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class DeviceList {
     private List<Device> devices;
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Device {
         private String id;
         private boolean isActive;

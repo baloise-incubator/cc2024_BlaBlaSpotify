@@ -49,17 +49,11 @@ public class PlaylistList {
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class ExternalUrls {
         private String spotify;
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Image {
         private String url;
         private int height;
@@ -67,9 +61,6 @@ public class PlaylistList {
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Owner {
         @JsonProperty("external_urls")
         private ExternalUrls externalUrls;
@@ -85,18 +76,12 @@ public class PlaylistList {
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Followers {
         private String href;
         private int total;
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Tracks {
         private String href;
         private int total;

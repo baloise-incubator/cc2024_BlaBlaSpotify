@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
 
     private String country;
@@ -36,9 +33,6 @@ public class User {
     private String uri;
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class ExplicitContent {
         @JsonProperty("filter_enabled")
         private boolean filterEnabled;
@@ -48,26 +42,17 @@ public class User {
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class ExternalUrls {
         private String spotify;
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Followers {
         private String href;
         private int total;
     }
 
     @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class Image {
         private String url;
         private int height;
