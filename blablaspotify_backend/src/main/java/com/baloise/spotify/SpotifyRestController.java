@@ -44,13 +44,10 @@ public class SpotifyRestController {
 
     @GetMapping("/play")
     public void play(@RequestParam("uri") String uri) throws Exception {
-        System.out.println("URI: " + uri);
-
         MultiValueMap<String, String> headers = createHeaders();
         headers.add("Content-Type", "application/json");
 
         String deviceId = deviceId().replaceAll("\"", "");
-        System.out.println("Device ID: " + deviceId);
 
         Play play = Play.builder().context_uri(uri).play(true).build();
         String url = "https://api.spotify.com/v1/me/player/play?device_id=" + deviceId;
