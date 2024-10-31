@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {PlaylistList, User} from '../types';
+import { interval, Subscription, take } from 'rxjs';
 
 declare global {
   interface Window {
@@ -23,6 +24,8 @@ export class SpotifyService {
   currentPlayListUrn?: string;
   nextPlayListUrn?: string;
   isActive = false;
+
+  fadeSubscription?: Subscription
 
   constructor(private httpClient: HttpClient) {
     this.init()
@@ -79,11 +82,17 @@ export class SpotifyService {
         error: (error) => console.error(error)
       });
     }
+
+    this.player.setVolume(0)
+    this.fadeSubscription = interval(300).pipe(take(5)).subscribe((i) => this.player.setVolume((i + 1) * 0.1))
   }
 
   pause() {
     this.isActive = false;
-    this.player?.pause()
+    this.fadeSubscription = interval(300).pipe(take(5)).subscribe({
+      next: (i) => this.player?.setVolume(1 - (i + 1) * 0.1),
+      complete: () => this.player?.pause()
+    })
   }
 
   initPlayer() {
