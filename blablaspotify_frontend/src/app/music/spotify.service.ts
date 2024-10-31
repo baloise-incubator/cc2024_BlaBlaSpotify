@@ -1,7 +1,8 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {PlaylistList, User} from '../types';
-import { interval, Subscription, take } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { PlaylistList, User } from '../types';
+import { Subscription } from 'rxjs';
+import { createFader } from '../shared/fade.util';
 
 declare global {
   interface Window {
@@ -84,15 +85,22 @@ export class SpotifyService {
     }
 
     this.player.setVolume(0)
-    this.fadeSubscription = interval(300).pipe(take(5)).subscribe((i) => this.player.setVolume((i + 1) * 0.1))
+    this.fadeSubscription = createFader(0.1).subscribe(v => this.player.setVolume(v))
   }
 
   pause() {
     this.isActive = false;
-    this.fadeSubscription = interval(300).pipe(take(5)).subscribe({
-      next: (i) => this.player?.setVolume(1 - (i + 1) * 0.1),
-      complete: () => this.player?.pause()
-    })
+
+    if (this.player) {
+      this.player.getCurrentState().then((state: { paused: any; }) => {
+        if (state && !state.paused) {
+          this.fadeSubscription = createFader(-0.1, 0.5).subscribe({
+            next: (v) => this.player?.setVolume(v),
+            complete: () => this.player?.pause()
+          })
+        }
+      })
+    }
   }
 
   initPlayer() {
