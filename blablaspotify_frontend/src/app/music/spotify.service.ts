@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {User} from '../types';
 import {Playlist} from './model';
 
 declare global {
@@ -17,7 +18,7 @@ export class SpotifyService {
   isAuthorized = false;
 
   accessToken: string = '';
-  avatarUrl: string = '';
+  user?: User;
   player: any;
   playlists: Playlist[] = [];
   currentPlayListUrn?: string;
@@ -34,7 +35,7 @@ export class SpotifyService {
         if (data) {
           this.accessToken = data.access_token;
           this.isAuthorized = true;
-          this.initAvatarUrl();
+          this.initUser();
           this.initPlaylists();
         }
       },
@@ -48,10 +49,10 @@ export class SpotifyService {
     window.location.href = '/api/spotify/auth/login';
   }
 
-  private initAvatarUrl() {
-    this.httpClient.get('/api/spotify/avatar-url').subscribe({
+  private initUser() {
+    this.httpClient.get('/api/spotify/user').subscribe({
       next: (data: any) => {
-        this.avatarUrl = data.url;
+        this.user = data;
       },
       error: (error) => {
         console.error(error);

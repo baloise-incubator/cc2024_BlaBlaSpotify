@@ -1,7 +1,14 @@
 import {NgIf} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCard, MatCardAvatar, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
+import {
+  MatCard,
+  MatCardAvatar,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
 import {MatOption} from '@angular/material/core';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatSelect} from '@angular/material/select';
@@ -30,7 +37,8 @@ import {SpotifyService} from '../spotify.service';
 })
 export class MusicPlayerComponent implements OnInit {
 
-  constructor(public spotifyService: SpotifyService) {}
+  constructor(public spotifyService: SpotifyService) {
+  }
 
   ngOnInit() {
     let windowRef = window as any;
@@ -51,7 +59,10 @@ export class MusicPlayerComponent implements OnInit {
     this.spotifyService.changePlayListUrn(newPlaylist)
   }
 
-  createAvatarUrl(url: string) {
-    return `url(${url})`
+  createAvatarUrl() {
+    if (this.spotifyService.user) {
+      return `url(${this.spotifyService.user.images[0].url})`
+    }
+    return '';
   }
 }

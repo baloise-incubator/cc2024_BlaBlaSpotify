@@ -26,8 +26,8 @@ public class SpotifyRestController {
     private final AuthenticationStore authenticationStore;
     private final RestTemplate restTemplate;
 
-    @GetMapping("/me")
-    public String me() throws Exception {
+    @GetMapping("/user")
+    public User user() throws Exception {
         ResponseEntity<User> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me",
                 HttpMethod.GET,
@@ -36,25 +36,7 @@ public class SpotifyRestController {
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody().getId();
-        } else {
-            throw new RuntimeException();
-        }
-    }
-
-    @GetMapping("/avatar-url")
-    public String avatarUrl() throws Exception {
-        ResponseEntity<String> response = restTemplate.exchange(
-                "https://api.spotify.com/v1/users/" + me(),
-                HttpMethod.GET,
-                new HttpEntity<>(null, createHeaders()),
-                String.class
-        );
-
-        if (response.getStatusCode().is2xxSuccessful()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            return jsonNode.get("images").get(0).toString();
+            return response.getBody();
         } else {
             throw new RuntimeException();
         }

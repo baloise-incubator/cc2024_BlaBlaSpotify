@@ -2,11 +2,11 @@
     <mat-card-header>
         <div *ngIf="spotifyService.isAuthorized"
             mat-card-avatar
-            [style.background-image]="createAvatarUrl(spotifyService.avatarUrl)"
+            [style.background-image]="createAvatarUrl()"
             style="background-size: cover;">
         </div>
         <mat-card-title>Music</mat-card-title>
-        <mat-card-subtitle>Girafi</mat-card-subtitle>
+        <mat-card-subtitle>{{spotifyService.user?.display_name}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div>
