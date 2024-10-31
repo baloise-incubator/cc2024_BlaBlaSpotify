@@ -1,11 +1,13 @@
 package com.baloise.spotify.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PlaylistList {
 
     private String href;
@@ -17,16 +19,13 @@ public class PlaylistList {
     private List<Item> items;
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Item {
         private boolean collaborative;
         private String description;
 
-        @JsonProperty("external_urls")
-        private ExternalUrls externalUrls;
-
         private String href;
         private String id;
-        private List<Image> images;
         private String name;
         private Owner owner;
         private boolean isPublic;
@@ -40,23 +39,8 @@ public class PlaylistList {
     }
 
     @Data
-    public static class ExternalUrls {
-        private String spotify;
-    }
-
-    @Data
-    public static class Image {
-        private String url;
-        private int height;
-        private int width;
-    }
-
-    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Owner {
-        @JsonProperty("external_urls")
-        private ExternalUrls externalUrls;
-
-        private Followers followers;
         private String href;
         private String id;
         private String type;
@@ -64,12 +48,6 @@ public class PlaylistList {
 
         @JsonProperty("display_name")
         private String displayName;
-    }
-
-    @Data
-    public static class Followers {
-        private String href;
-        private int total;
     }
 
     @Data

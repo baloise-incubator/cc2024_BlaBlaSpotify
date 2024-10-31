@@ -1,5 +1,6 @@
 package com.baloise.blabla;
 
+import com.baloise.blabla.api.ProgramList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;

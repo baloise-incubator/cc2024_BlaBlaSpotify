@@ -74,6 +74,28 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>cz.habarta.typescript-generator</groupId>
+                <artifactId>typescript-generator-maven-plugin</artifactId>
+                <version>3.2.1263</version>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsonLibrary>jackson2</jsonLibrary>
+                    <outputKind>module</outputKind>
+                    <classPatterns>
+                        <classPattern>**.api.*</classPattern>
+                    </classPatterns>
+                    <outputFile>${project.basedir}/../blablaspotify_frontend/src/app/types.d.ts</outputFile>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

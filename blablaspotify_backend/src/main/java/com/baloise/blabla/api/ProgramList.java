@@ -1,4 +1,4 @@
-package com.baloise.blabla;
+package com.baloise.blabla.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
