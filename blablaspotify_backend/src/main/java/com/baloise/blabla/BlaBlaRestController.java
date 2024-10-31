@@ -32,10 +32,9 @@ public class BlaBlaRestController {
         HttpHeaders headers = srfAuthenticationStore.createHeaders();
         headers.set("Accept", "application/json");
         headers.set("Accept-Encoding", "gzip");
-        System.out.println("headers: " + headers);
 
         ResponseEntity<byte[]> response = restTemplate.exchange(
-                "https://api.srgssr.ch/epg/v3/srf/tv/stations/" + program,
+                "https://api.srgssr.ch/epg/v3/srf/radio/stations/" + program,
                 HttpMethod.GET,
                 new HttpEntity<>(null, headers),
                 byte[].class
@@ -46,5 +45,4 @@ public class BlaBlaRestController {
             return new ObjectMapper().readValue(reader, ProgramList.class);
         }
     }
-
 }
