@@ -5,7 +5,7 @@ export type SourceType = 'blabla' | 'music'
 
 @Injectable({ providedIn: 'root' })
 export class ControlsService {
-    private readonly _playBackSource = signal<SourceType>('music')
+    private readonly _playBackSource = signal<SourceType>('blabla')
     private readonly _playBackStatus = signal<'playing' | 'paused'>('paused')
 
     readonly playBackState = computed(() =>
