@@ -72,7 +72,6 @@ export class SpotifyService {
 
     if (!urn && this.player && this.currentPlayListUrn !== undefined) {
       this.player.resume()
-      return
     } else {
       this.currentPlayListUrn = urn ? urn : this.nextPlayListUrn
       this.httpClient.get('/api/spotify/play?uri=' + this.currentPlayListUrn).subscribe({
