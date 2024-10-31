@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -26,15 +27,15 @@ public class BlaBlaRestController {
 
     private final RestTemplate restTemplate;
 
-    @GetMapping("/programGuides")
-    public ProgramList getProgramGuide() throws Exception {
+    @GetMapping("/programGuides/{program}")
+    public ProgramList getProgramGuide(@PathVariable("program") String program) throws Exception {
         HttpHeaders headers = srfAuthenticationStore.createHeaders();
         headers.set("Accept", "application/json");
         headers.set("Accept-Encoding", "gzip");
         System.out.println("headers: " + headers);
 
         ResponseEntity<byte[]> response = restTemplate.exchange(
-                "https://api.srgssr.ch/epg/v3/srf/tv/stations/srf-1",
+                "https://api.srgssr.ch/epg/v3/srf/tv/stations/" + program,
                 HttpMethod.GET,
                 new HttpEntity<>(null, headers),
                 byte[].class
