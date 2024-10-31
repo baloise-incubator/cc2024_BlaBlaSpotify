@@ -1,6 +1,5 @@
 package com.baloise.blabla;
 
-import ch.srgssr.epg.api.Program;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 @RestController
