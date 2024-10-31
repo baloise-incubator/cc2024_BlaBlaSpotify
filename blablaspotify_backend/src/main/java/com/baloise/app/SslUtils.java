@@ -1,4 +1,4 @@
-package com.baloise.springtutorialbackend;
+package com.baloise.app;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;

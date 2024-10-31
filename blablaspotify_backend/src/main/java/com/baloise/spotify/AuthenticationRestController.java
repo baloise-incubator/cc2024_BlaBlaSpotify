@@ -1,6 +1,5 @@
 package com.baloise.spotify;
 
-import com.baloise.springtutorialbackend.SslUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
