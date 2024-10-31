@@ -1,7 +1,7 @@
 import {NgIf} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCard, MatCardAvatar, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {MatOption} from '@angular/material/core';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatSelect} from '@angular/material/select';
@@ -12,11 +12,13 @@ import {SpotifyService} from '../spotify.service';
   selector: 'music-player',
   standalone: true,
   imports: [
-    MatButton,
+    MatButtonModule,
     MatCard,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
+    MatCardSubtitle,
+    MatCardAvatar,
     MatFormField,
     MatLabel,
     MatOption,
@@ -28,17 +30,12 @@ import {SpotifyService} from '../spotify.service';
 })
 export class MusicPlayerComponent implements OnInit {
 
-  selectedPlaylist: string | undefined;
-  isPlaying = false;
-
-  constructor(public spotifyService: SpotifyService) {
-  }
+  constructor(public spotifyService: SpotifyService) {}
 
   ngOnInit() {
     let windowRef = window as any;
     windowRef.onSpotifyWebPlaybackSDKReady = () => {
       this.spotifyService.initPlayer();
-      console.log("inited")
     };
   }
 
@@ -46,24 +43,15 @@ export class MusicPlayerComponent implements OnInit {
     return this.spotifyService.playlists;
   }
 
-  pausePlayBack() {
-    this.isPlaying = false;
+  selectedPlaylist(): string | undefined {
+    return this.spotifyService.nextPlayListUrn
   }
 
-  togglePlayback() {
-    this.isPlaying = !this.isPlaying;
-    if (this.isPlaying) {
-      this.spotifyService.play(this.selectedPlaylist);
-    } else {
-      this.spotifyService.pause();
-    }
+  onChangePlaylist(newPlaylist: string) {
+    this.spotifyService.changePlayListUrn(newPlaylist)
   }
 
-  playButtonDisabled() {
-    return false;
-  }
-
-  playButtonText() {
-    return this.isPlaying ? "Pause" : "Play";
+  createAvatarUrl(url: string) {
+    return `url(${url})`
   }
 }

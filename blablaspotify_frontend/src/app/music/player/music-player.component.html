@@ -1,31 +1,27 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>
-            Music-Player
-        </mat-card-title>
+        <div *ngIf="spotifyService.isAuthorized"
+            mat-card-avatar
+            [style.background-image]="createAvatarUrl(spotifyService.avatarUrl)"
+            style="background-size: cover;">
+        </div>
+        <mat-card-title>Music</mat-card-title>
+        <mat-card-subtitle>Girafi</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div>
             <div *ngIf="!spotifyService.isAuthorized">
-                <button (click)="spotifyService.authorize()">Authorize Spotify</button>
+                <button mat-flat-button (click)="spotifyService.authorize()">Authorize Spotify</button>
             </div>
-
-            <div *ngIf="spotifyService.isAuthorized">
-                <img src="{{spotifyService.avatarUrl}}" style="width: 100px; height: 100px"> is logged in...
-            </div>
-
             <div class="player__controls" *ngIf="spotifyService.isAuthorized">
                 <mat-form-field appearance="outline" subscriptSizing="dynamic">
                     <mat-label>Playlists</mat-label>
-                    <mat-select [(value)]="selectedPlaylist" (selectionChange)="pausePlayBack()">
+                    <mat-select [value]="selectedPlaylist()" (selectionChange)="onChangePlaylist($event.value)">
                         @for (playlist of playlists(); track playlist.urn) {
                             <mat-option [value]="playlist.urn">{{ playlist.title }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
-                <button mat-flat-button (click)="togglePlayback()"
-                        [disabled]="playButtonDisabled()">{{ playButtonText() }}
-                </button>
             </div>
         </div>
     </mat-card-content>
