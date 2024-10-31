@@ -93,7 +93,7 @@ public class SpotifyRestController {
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            for(DeviceList.Device device : response.getBody().getDevices()) {
+            for (DeviceList.Device device : response.getBody().getDevices()) {
                 if (device.getName().contains("CodeCamp")) {
                     return device.getId();
                 }

@@ -1,0 +1,12 @@
+GET http://www.sbb.ch
+
+> {%
+  client.global.set("token", "w1Ki484kYWswlnKXvjwoTJbxAU09");
+%}
+
+###
+GET https://api.srgssr.ch/epg/v3/srf/tv/stations/srf-1
+Authorization: Bearer {{token}}
+Accept: "application/json"
+Accept-Encoding: "identity"
+

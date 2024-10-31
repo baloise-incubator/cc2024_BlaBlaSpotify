@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class SpringTutorialBackendApplication {
 
     public static void main(String[] args) {
+        SslUtils.disableSSLCertificateChecking();
         SpringApplication.run(SpringTutorialBackendApplication.class, args);
     }
 

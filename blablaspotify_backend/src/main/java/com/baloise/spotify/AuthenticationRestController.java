@@ -53,8 +53,6 @@ public class AuthenticationRestController {
 
     @GetMapping("/callback")
     public RedirectView callback(@RequestParam("code") String code) {
-        SslUtils.disableSSLCertificateChecking();
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
