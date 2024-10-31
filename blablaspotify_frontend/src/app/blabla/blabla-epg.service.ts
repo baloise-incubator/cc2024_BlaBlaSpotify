@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { isAfter, subSeconds } from 'date-fns'
 import { ControlsService } from '../controls/controls.service';
-import {Program, ProgramList} from '../types';
+import {Program, ProgramDateTimes, ProgramList} from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class BlaBlaEpgService {
@@ -36,10 +36,16 @@ export class BlaBlaEpgService {
 
     stationChanged(stationId: string) {
         console.log('Station changed to: ', stationId);
-        this.getProgramList(stationId);
+
+        if (stationId === 'srf-1-demo') {
+            console.log('demo station');
+            this.scheduleBlaBla(this.createDemoStationProgramList());
+        } else {
+            this.setProgramGuide(stationId);
+        }
     }
 
-    getProgramList(stationId: string) {
+    setProgramGuide(stationId: string) {
         this._httpClient.get('/api/blabla/programGuides/' + stationId).subscribe({
             next: (response: any) => {
                 this.scheduleBlaBla(response as ProgramList);
@@ -48,5 +54,33 @@ export class BlaBlaEpgService {
                 console.error('Failed to get program list: ', error)
             }
         });
+    }
+
+    createDemoStationProgramList(): ProgramList {
+        let programs = [];
+        for (let i = 0; i < 50; i++) {
+            programs.push(this.createDemoProgram(i));
+        }
+        return {
+            programs: programs
+        } as ProgramList;
+    }
+
+    private createDemoProgram(i: number): Program {
+        const defaultDurationSeconds = 15;
+        const startDate = new Date();
+        startDate.setUTCSeconds(startDate.getUTCSeconds() + (defaultDurationSeconds * 2) * i);
+        const endDate = new Date(startDate.getTime());
+        endDate.setUTCSeconds(startDate.getUTCSeconds() + defaultDurationSeconds);
+        return {
+            title: 'Demo Episode ' + i,
+            shortDescription: 'Demo Episode ' + i,
+            dateTimes: {
+                startTime: startDate.toISOString(),
+                endTime: endDate.toISOString(),
+                duration: defaultDurationSeconds.toString(),
+                timezone: 'UTC'
+            } as ProgramDateTimes
+        } as Program;
     }
 }

@@ -39,6 +39,10 @@ export class PlayerComponent {
 
   protected readonly stationUrl = computed(() => this.getStreamUrl(this.selectedStation()))
 
+  constructor() {
+    this.onStationValueChange();
+  }
+
   private _handlePlayerStatus = effect(() => {
     const isPlaying = this.isActive()
     const stationUrl = this.stationUrl()
