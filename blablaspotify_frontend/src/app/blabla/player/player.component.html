@@ -1,18 +1,20 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>BlaBla</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div>
-      <audio (canplay)="startPlayBack()" #player></audio>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Sender</mat-label>
-        <mat-select [(value)]="selectedStation" (selectionChange)="onStationValueChange()">
-          @for(station of stationList(); track station.epgId) {
-          <mat-option [value]="station.epgId">{{ station.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </mat-card-content>
-</mat-card>
+<div [class.player-active]="isActive()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>BlaBla</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        <audio (canplay)="startPlayBack()" #player></audio>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Sender</mat-label>
+          <mat-select [(value)]="selectedStation" (selectionChange)="onStationValueChange()">
+            @for(station of stationList(); track station.epgId) {
+            <mat-option [value]="station.epgId">{{ station.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

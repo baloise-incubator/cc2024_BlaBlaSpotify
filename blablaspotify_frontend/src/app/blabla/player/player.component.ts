@@ -25,7 +25,7 @@ import { createFader } from '../../shared/fade.util';
     MatOption,
     MatIcon,
     MatIconButton,
-  ]
+  ],
 })
 export class PlayerComponent {
   readonly isActive = input.required<boolean>()

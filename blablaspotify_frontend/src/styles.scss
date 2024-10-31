@@ -7,3 +7,11 @@ main { padding: 2rem; max-width: 60rem; margin: 0 auto; }
 mat-card-content { padding-top: 16px !important; }
 .w-full { width: 100%; }
 .h-full { height: 100%; }
+
+$glow-color:   #abc7ff;
+
+.player-active {
+    border: 2px solid  $glow-color;
+    border-radius: 8px;
+    box-shadow: 0 0 10px $glow-color, 0 0 15px $glow-color, 0 0 20px $glow-color;
+}

@@ -47,6 +47,10 @@ export class MusicPlayerComponent implements OnInit {
     };
   }
 
+  isActive(): boolean {
+    return this.spotifyService.isActive
+  }
+
   playlists(): Item[] {
     return this.spotifyService.playlistList?.items || [];
   }
