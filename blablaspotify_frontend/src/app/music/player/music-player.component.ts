@@ -12,7 +12,7 @@ import {
 import {MatOption} from '@angular/material/core';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatSelect} from '@angular/material/select';
-import {Playlist} from '../model';
+import {Item} from '../../types';
 import {SpotifyService} from '../spotify.service';
 
 @Component({
@@ -47,8 +47,8 @@ export class MusicPlayerComponent implements OnInit {
     };
   }
 
-  playlists(): Playlist[] {
-    return this.spotifyService.playlists;
+  playlists(): Item[] {
+    return this.spotifyService.playlistList?.items || [];
   }
 
   selectedPlaylist(): string | undefined {

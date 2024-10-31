@@ -17,8 +17,8 @@
                 <mat-form-field appearance="outline" subscriptSizing="dynamic">
                     <mat-label>Playlists</mat-label>
                     <mat-select [value]="selectedPlaylist()" (selectionChange)="onChangePlaylist($event.value)">
-                        @for (playlist of playlists(); track playlist.urn) {
-                            <mat-option [value]="playlist.urn">{{ playlist.title }}</mat-option>
+                        @for (playlist of playlists(); track playlist.uri) {
+                            <mat-option [value]="playlist.uri">{{ playlist.name }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
