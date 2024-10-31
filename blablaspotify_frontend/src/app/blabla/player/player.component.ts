@@ -6,6 +6,7 @@ import { RadioStationFacade } from '../data-access/radio-station.facade';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
+import { interval, Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'blabla-player',
@@ -39,26 +40,51 @@ export class PlayerComponent {
 
   protected readonly stationUrl = computed(() => this.getStreamUrl(this.selectedStation()))
 
+  private _fadeSubscription?: Subscription
+
   private _handlePlayerStatus = effect(() => {
     const isPlaying = this.isActive()
     const stationUrl = this.stationUrl()
 
     untracked(() => {
       const player = this.playerElement()?.nativeElement
-      player!.src = stationUrl
+
+      console.log(stationUrl)
 
       if (isPlaying) {
+        player!.src = stationUrl
         player!.load()
-        //player.play()
       } else {
-        player!.pause()
+        this.stopPlayBack()
       }
     })
   })
 
   protected startPlayBack() {
     if (this.isActive()) {
-      this.playerElement()!.nativeElement.play()
+      const player = this.playerElement()!.nativeElement
+      player.volume = 0
+      player.play()
+      this.cleanupFadeSubscription()
+      this._fadeSubscription = interval(300).pipe(take(5)).subscribe((i) => player.volume = (i + 1) * 0.2)
+    }
+  }
+
+  protected stopPlayBack() {
+    const player = this.playerElement()!.nativeElement
+    if (!player.paused) {
+      this.cleanupFadeSubscription()
+      interval(300).pipe(take(5)).subscribe({
+        next: (i) => player.volume = 1 - ((i + 1) * 0.2),
+        complete: () => player.pause()
+      })
+    }
+  }
+
+  private cleanupFadeSubscription() {
+    if (this._fadeSubscription !== undefined) {
+      this._fadeSubscription.unsubscribe()
+      this._fadeSubscription = undefined
     }
   }
 
