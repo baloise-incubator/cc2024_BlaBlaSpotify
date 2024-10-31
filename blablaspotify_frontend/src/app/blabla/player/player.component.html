@@ -7,7 +7,7 @@
       <audio id="player" (canplay)="startPlayBack()" #player></audio>
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Sender</mat-label>
-        <mat-select [(value)]="selectedStation">
+        <mat-select [(value)]="selectedStation" (selectionChange)="onStationValueChange()">
           @for(station of stationList(); track station.epgId) {
           <mat-option [value]="station.epgId">{{ station.name }}</mat-option>
           }

@@ -1,6 +1,7 @@
 import { Component, computed, signal, viewChild, ElementRef, inject, model, effect, untracked, input } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import {BlaBlaEpgService} from '../blabla-epg.service';
 import { RadioStationFacade } from '../data-access/radio-station.facade';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -28,6 +29,7 @@ export class PlayerComponent {
   readonly isActive = input.required<boolean>()
 
   private _radioStationFacade = inject(RadioStationFacade)
+  private _epgService = inject(BlaBlaEpgService)
 
   protected readonly playerElement = viewChild<ElementRef<HTMLAudioElement>>('player')
 
@@ -63,5 +65,9 @@ export class PlayerComponent {
   private getStreamUrl(epgId?: string) {
     const station = this._radioStationFacade.stations().find(station => station.epgId === epgId)
     return station === undefined ? '' : station.streamUrl
+  }
+
+  onStationValueChange() {
+    this._epgService.stationChanged(this.selectedStation());
   }
 }
