@@ -1,0 +1,211 @@
+swagger: '2.0'
+info:
+  description: This API provides programmatic access to retrieve Electronic Program Guide (EPG) for TV and Radio stations.
+            Supported business units are SRF, RSI and RTS.
+  version: 3.0.7
+  title: SRGSSR EPG V3
+  termsOfService: >-
+    https://developer.srgssr.ch/sites/default/files/Terms_SRGSSR_APIPortal_ENG.pdf
+  contact:
+    email: api@srgssr.ch
+host: api.srgssr.ch
+basePath: /epg/v3
+tags:
+  - name: EPG Data
+    description: > 
+            This API provides programmatic access to retrieve Electronic Program Guide (EPG) for TV and Radio stations.
+            Supported business units are SRF, RSI and RTS.
+            
+            Supported broadcast types are tv and radio.
+            Supported station names are:
+            SRF Radio: srf-1, srf-2,srf-2-kultur, srf-3, srf-4, srf-musikwelle, srf-virus.
+            SRF TV: srf-1, srf-2, srf-info.
+            RTS TV: rts-1, rts-2.
+            RTS Radio: RTSINFO, LA1ERE, ESPACE2, COULEUR3, OPTION_MUSIQUE
+            RSI Radio: rete-uno, rete-due, rete-tre.
+            RSI TV: la-1, la-2.
+            Example - https://api.srgssr.ch/epg/v3/srf/tv/stations/srf-1
+schemes:
+  - https
+securityDefinitions:
+  srg_auth:
+    type: oauth2
+    tokenUrl: https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials
+    flow: application
+    scopes: {}
+paths:
+  /{businessUnit}/{broadcastType}/stations/{stationName}:
+    get:
+      tags:
+        - EPG Data
+      summary: EPG Data
+      description: >-
+        Retrieve EPG data by providing: business unit name, broadcast type,
+        station name and date
+      operationId: EPGData
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Pass the access-key as a Bearer token in Authorization header. In
+            the developer portal, Authorization header is attached on OAuth
+            authentication.
+          type: string
+          format: text
+        - name: businessUnit
+          in: path
+          description: Supported business units are srf, rsi and rts
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - srf
+              - rts
+              - rsi
+            default: srf
+        - name: broadcastType
+          in: path
+          description: Supported broadcast types are tv and radio
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - tv
+              - radio
+            default: tv
+        - name: stationName
+          in: path
+          description: >-
+            Supported station names are: SRF Radio: srf-1, srf-2,srf-2-kultur,
+            srf-3, srf-4, srf-musikwelle, srf-virus. SRF TV: srf-1, srf-2,
+            srf-info. RTS TV: rts-1, rts-2. RSI Radio: rete-uno, rete-due,
+            rete-tre. RSI TV: la-1, la-2
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - srf-1
+              - srf-2
+              - srf-3
+              - srf-4
+              - srf-musikwelle
+              - srf-virus
+              - srf-info
+              - rts-1
+              - rts-2
+              - rete-uno
+              - rete-due
+              - rete-tre
+              - la-1
+              - la-2
+              - RTSINFO
+              - LA1ERE
+              - ESPACE2
+              - COULEUR3
+              - OPTION_MUSIQUE
+            default: srf-1
+        - name: date
+          in: query
+          description: >-
+            Date should be entererd in YYYY-MM-DD format. E.g.: 2020-05-01. If
+            not specified current date will be considered.
+          type: string
+          format: date
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Program'
+        '400':
+          description: Bad Request
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Error'
+        '429':
+          description: Too Many Requests
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Error'
+      security:
+        - srg_auth: []
+definitions:
+  Program:
+    type: object
+    properties:
+      title:
+        type: string
+      shortDescription:
+        type: string
+      longDescription:
+        type: string
+      dateTimes:
+        type: object
+        properties:
+          startTime:
+            type: string
+          endTime:
+            type: string
+          duration:
+            type: string
+      adultWarning:
+        type: boolean
+      isLive:
+        type: boolean
+      primeur:
+        type: boolean
+      hasSubtitle:
+        type: boolean
+      replica:
+        type: boolean
+      geoBlocked:
+        type: boolean
+      longHtmlDesciption:
+        type: string
+      productionYear:
+        type: string
+      episodeNumber:
+        type: string
+      people:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+      image:
+        type: object
+        properties:
+          url:
+            type: string
+          description:
+            type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      info:
+        type: string

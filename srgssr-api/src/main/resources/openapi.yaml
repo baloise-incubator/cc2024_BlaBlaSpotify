@@ -1,0 +1,261 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: api@srgssr.ch
+  description: "This API provides programmatic access to retrieve Electronic Program\
+    \ Guide (EPG) for TV and Radio stations. Supported business units are SRF, RSI\
+    \ and RTS."
+  termsOfService: https://developer.srgssr.ch/sites/default/files/Terms_SRGSSR_APIPortal_ENG.pdf
+  title: SRGSSR EPG V3
+  version: 3.0.7
+servers:
+- url: https://api.srgssr.ch/epg/v3
+tags:
+- description: "This API provides programmatic access to retrieve Electronic Program\
+    \ Guide (EPG) for TV and Radio stations. Supported business units are SRF, RSI\
+    \ and RTS.\nSupported broadcast types are tv and radio. Supported station names\
+    \ are: SRF Radio: srf-1, srf-2,srf-2-kultur, srf-3, srf-4, srf-musikwelle, srf-virus.\
+    \ SRF TV: srf-1, srf-2, srf-info. RTS TV: rts-1, rts-2. RTS Radio: RTSINFO, LA1ERE,\
+    \ ESPACE2, COULEUR3, OPTION_MUSIQUE RSI Radio: rete-uno, rete-due, rete-tre. RSI\
+    \ TV: la-1, la-2. Example - https://api.srgssr.ch/epg/v3/srf/tv/stations/srf-1\n"
+  name: EPG Data
+paths:
+  /{businessUnit}/{broadcastType}/stations/{stationName}:
+    get:
+      description: "Retrieve EPG data by providing: business unit name, broadcast\
+        \ type, station name and date"
+      operationId: EPGData
+      parameters:
+      - description: "Pass the access-key as a Bearer token in Authorization header.\
+          \ In the developer portal, Authorization header is attached on OAuth authentication."
+        in: header
+        name: Authorization
+        schema:
+          format: text
+          type: string
+      - description: "Supported business units are srf, rsi and rts"
+        explode: false
+        in: path
+        name: businessUnit
+        required: true
+        schema:
+          items:
+            default: srf
+            enum:
+            - srf
+            - rts
+            - rsi
+            type: string
+          type: array
+        style: simple
+      - description: Supported broadcast types are tv and radio
+        explode: false
+        in: path
+        name: broadcastType
+        required: true
+        schema:
+          items:
+            default: tv
+            enum:
+            - tv
+            - radio
+            type: string
+          type: array
+        style: simple
+      - description: "Supported station names are: SRF Radio: srf-1, srf-2,srf-2-kultur,\
+          \ srf-3, srf-4, srf-musikwelle, srf-virus. SRF TV: srf-1, srf-2, srf-info.\
+          \ RTS TV: rts-1, rts-2. RSI Radio: rete-uno, rete-due, rete-tre. RSI TV:\
+          \ la-1, la-2"
+        explode: false
+        in: path
+        name: stationName
+        required: true
+        schema:
+          items:
+            default: srf-1
+            enum:
+            - srf-1
+            - srf-2
+            - srf-3
+            - srf-4
+            - srf-musikwelle
+            - srf-virus
+            - srf-info
+            - rts-1
+            - rts-2
+            - rete-uno
+            - rete-due
+            - rete-tre
+            - la-1
+            - la-2
+            - RTSINFO
+            - LA1ERE
+            - ESPACE2
+            - COULEUR3
+            - OPTION_MUSIQUE
+            type: string
+          type: array
+        style: simple
+      - description: "Date should be entererd in YYYY-MM-DD format. E.g.: 2020-05-01.\
+          \ If not specified current date will be considered."
+        in: query
+        name: date
+        schema:
+          format: date
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Program'
+                type: array
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error'
+                type: array
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error'
+                type: array
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error'
+                type: array
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error'
+                type: array
+          description: Too Many Requests
+      security:
+      - srg_auth: []
+      summary: EPG Data
+      tags:
+      - EPG Data
+      x-accepts: application/json
+      x-tags:
+      - tag: EPG Data
+components:
+  schemas:
+    Program:
+      example:
+        longDescription: longDescription
+        primeur: true
+        image:
+          description: description
+          url: url
+        replica: true
+        shortDescription: shortDescription
+        productionYear: productionYear
+        title: title
+        episodeNumber: episodeNumber
+        people:
+        - name: name
+        - name: name
+        dateTimes:
+          duration: duration
+          startTime: startTime
+          endTime: endTime
+        isLive: true
+        hasSubtitle: true
+        longHtmlDesciption: longHtmlDesciption
+        adultWarning: true
+        geoBlocked: true
+      properties:
+        title:
+          type: string
+        shortDescription:
+          type: string
+        longDescription:
+          type: string
+        dateTimes:
+          $ref: '#/components/schemas/Program_dateTimes'
+        adultWarning:
+          type: boolean
+        isLive:
+          type: boolean
+        primeur:
+          type: boolean
+        hasSubtitle:
+          type: boolean
+        replica:
+          type: boolean
+        geoBlocked:
+          type: boolean
+        longHtmlDesciption:
+          type: string
+        productionYear:
+          type: string
+        episodeNumber:
+          type: string
+        people:
+          items:
+            $ref: '#/components/schemas/Program_people_inner'
+          type: array
+        image:
+          $ref: '#/components/schemas/Program_image'
+      type: object
+    Error:
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        info:
+          type: string
+      type: object
+    Program_dateTimes:
+      example:
+        duration: duration
+        startTime: startTime
+        endTime: endTime
+      properties:
+        startTime:
+          type: string
+        endTime:
+          type: string
+        duration:
+          type: string
+      type: object
+    Program_people_inner:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      type: object
+    Program_image:
+      example:
+        description: description
+        url: url
+      properties:
+        url:
+          type: string
+        description:
+          type: string
+      type: object
+  securitySchemes:
+    srg_auth:
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials
+      type: oauth2
+x-original-swagger-version: "2.0"
