@@ -25,7 +25,10 @@ import java.nio.charset.StandardCharsets;
 public class AuthenticationRestController {
 
     private static final String ENCODING = StandardCharsets.UTF_8.toString();
-    private static final String REDIRECT_URI = "http://localhost:8080/spotify/auth/callback";
+    // use this for incubator deployment
+    //    private static final String REDIRECT_URI = "http://blabla-spotify.apps.baloise.dev/api/spotify/auth/callback";
+    // use this for local development
+        private static final String REDIRECT_URI = "http://localhost:8080/spotify/auth/callback";
 
     @Value("${music.spotify.client_id}")
     private String clientId;
