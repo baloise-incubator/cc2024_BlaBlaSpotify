@@ -1,4 +1,4 @@
-<div [class.player-active]="isActive">
+<div [class.player-active]="isActive()">
     <mat-card>
         <mat-card-header>
             <div *ngIf="spotifyService.isAuthorized" mat-card-avatar [style.background-image]="createAvatarUrl()"
