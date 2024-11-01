@@ -48,12 +48,15 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 # Links
 ## Source
 - https://github.com/baloise-incubator/cc2024_BlaBlaSpotify
+
 ## Spotify
 - Web API & Player API: https://developer.spotify.com/
 - Our App: https://developer.spotify.com/dashboard/d524fc41ac744eb6878f3a1d29c71f70/settings
 - Maybe a good openapi.yaml for the Web API: https://github.com/sonallux/spotify-web-api/blob/main/fixed-spotify-open-api.yml
 
 ## SRGSSR
+- SRF API Program/Lineup: https://developer.srgssr.ch/api-catalog/srgssr-epg-v3
+- SRF API Channels, Streams, etc.: https://developer.srgssr.ch/api-catalog/srgssr-audio-0
 
 ## Incubator
 - Incubator: https://console.baloise.dev/add/all-namespaces
@@ -62,3 +65,9 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 - Sealed Secrets: https://confluence.baloisenet.com/pages/viewpage.action?pageId=1867186764
 - Sealed Secrets CA: https://github.com/baloise-incubator/okd4-cluster-infra-apps/blob/master/sealed-secrets/kubeseal.crt
 
+## Misc
+- Material UI: https://m3.material.io/
+- Material UI for Angular: https://material.angular.io/
+- Radio Browser API with thousands of radio streams: https://www.radio-browser.info/
+- Inofficial TuneIn API docs: https://tunein-api.corehacked.com/
+- Media Elements for various services (not tried): https://github.com/muxinc/media-elements
