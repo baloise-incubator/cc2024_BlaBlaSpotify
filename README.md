@@ -29,10 +29,11 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 1. docker run -p 8080:8080 blabla-backend
 1. docker logs -f blabla-backend
 2. docker rm -f blabla-backend
+3. oc create secret generic my-db-secret --dry-run=client -o yaml --from-literal="SRF_CONSUMER_KEY=FIXME" --from-literal="SRF_CONSUMER_SECRET=FIXME" --from-literal="SPOTIFY_CLIENT_ID=FIXME" --from-literal="SPOTIFY_CLIENT_SECRET=FIXME"> blabla-secrets.yaml
+1. kubeseal --cert https://raw.githubusercontent.com/baloise-incubator/okd4-cluster-infra-apps/refs/heads/master/sealed-secrets/kubeseal.crt --namespace=blabla-spotify -oyaml < blabla-secrets.yaml > namespaced-sealed-secret.yaml
+
 ## Frontend
 1. npm run build
 1. docker build -t blabla-frontend .
 1. docker run -p 4200:8080 blabla-frontend
 1. docker rm -f blabla-frontend
-
-
