@@ -22,3 +22,17 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 # Try it out
 <link here>
 
+# Deploy it on incubator
+## Backend
+1. mvn clean install
+1. docker build -t blabla-backend .
+1. docker run -p 8080:8080 blabla-backend
+1. docker logs -f blabla-backend
+2. docker rm -f blabla-backend
+## Frontend
+1. npm run build
+1. docker build -t blabla-frontend .
+1. docker run -p 4200:8080 blabla-frontend
+1. docker rm -f blabla-frontend
+
+
