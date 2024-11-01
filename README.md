@@ -14,10 +14,17 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 1. Create one final stream, where User can switch between Blabla and Music
 1. Automatic switching to Blabla-Stream, when blabla is broadcasted
 1. Smooth Transitions (Wait with Blabla until song has ended, or Smooth Fade-out/in)
-1. Nice UI for Spotify (Playlists, Artists, Skip Button, Login etc.)
-1. Radio station selectable from 50'000 stations
+2. PowerPoint Slides
+2. ----- up to here happened in the CodeCamp in Emmetten -----
+1. Deployment to Incubator
+2. Nice UI for Spotify (Playlists, Artists, Skip Button, Login etc.)
+3. Display current song/Playlist/Blabla-Epiosode
+1. Radio station selectable from 50'000 stations (-> not possible due to lack of meta data)
 1. Go-Mobile: PWA
 1. Android/iOS app
+2. Mix Music from station 1 with Blabla from station 2
+3. Mix Music from station 1 with Spotify during the Blabla episodes
+4. Be millionaire and love-your-live!
 
 # Try it out
 <link here>
@@ -37,3 +44,21 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 1. docker build -t blabla-frontend .
 1. docker run -p 4200:8080 blabla-frontend
 1. docker rm -f blabla-frontend
+
+# Links
+## Source
+- https://github.com/baloise-incubator/cc2024_BlaBlaSpotify
+## Spotify
+- Web API & Player API: https://developer.spotify.com/
+- Our App: https://developer.spotify.com/dashboard/d524fc41ac744eb6878f3a1d29c71f70/settings
+- Maybe a good openapi.yaml for the Web API: https://github.com/sonallux/spotify-web-api/blob/main/fixed-spotify-open-api.yml
+
+## SRGSSR
+
+## Incubator
+- Incubator: https://console.baloise.dev/add/all-namespaces
+- Incubator Deployments: https://github.com/baloise-incubator/code-camp-apps
+- ArgoCD: https://argocd.baloise.dev/
+- Sealed Secrets: https://confluence.baloisenet.com/pages/viewpage.action?pageId=1867186764
+- Sealed Secrets CA: https://github.com/baloise-incubator/okd4-cluster-infra-apps/blob/master/sealed-secrets/kubeseal.crt
+
