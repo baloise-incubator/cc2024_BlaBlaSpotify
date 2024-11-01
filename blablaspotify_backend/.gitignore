@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/blabla-secrets.yaml
