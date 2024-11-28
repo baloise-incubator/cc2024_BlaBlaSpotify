@@ -118,7 +118,8 @@ export class SpotifyService {
     this.httpClient.get('/api/spotify/playlists').subscribe({
       next: (data: any) => {
         this.playlistList = data as PlaylistList;
-        this.nextPlayListUrn = this.playlistList.items[0].uri;
+        this.playlistList.items = this.playlistList.items.filter((playlist) => playlist !== null);
+        this.nextPlayListUrn = this.playlistList.items[1].uri;
       },
       error: (error) => {
         console.error(error);

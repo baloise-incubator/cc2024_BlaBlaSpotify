@@ -31,7 +31,7 @@ public class BlaBlaRestController {
     public ProgramList getProgramGuide(@PathVariable("program") String program) throws Exception {
         HttpHeaders headers = srfAuthenticationStore.createHeaders();
         headers.set("Accept", "application/json");
-        headers.set("Accept-Encoding", "gzip");
+//        headers.set("Accept-Encoding", "gzip");
 
         ResponseEntity<byte[]> response = restTemplate.exchange(
                 "https://api.srgssr.ch/epg/v3/srf/radio/stations/" + program,
