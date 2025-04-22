@@ -25,16 +25,15 @@ import java.nio.charset.StandardCharsets;
 public class AuthenticationRestController {
 
     private static final String ENCODING = StandardCharsets.UTF_8.toString();
-    // use this for incubator deployment
-    //    private static final String REDIRECT_URI = "http://blabla-spotify.apps.baloise.dev/api/spotify/auth/callback";
-    // use this for local development
-        private static final String REDIRECT_URI = "http://localhost:8080/spotify/auth/callback";
 
     @Value("${music.spotify.client_id}")
     private String clientId;
 
     @Value("${music.spotify.client_secret}")
     private String clientSecret;
+
+    @Value("${music.spotify.redirect_uri}")
+    private String redirectUri;
 
     private final AuthenticationStore authenticationStore;
     private final RestTemplate restTemplate;
@@ -43,7 +42,7 @@ public class AuthenticationRestController {
     public RedirectView login() throws Exception {
         String targetUrl = "https://accounts.spotify.com/authorize"
                 + "?client_id=" + URLEncoder.encode(clientId, ENCODING)
-                + "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, ENCODING)
+                + "&redirect_uri=" + URLEncoder.encode(redirectUri, ENCODING)
                 + "&response_type=" + URLEncoder.encode("code", ENCODING)
                 + "&scope=" + URLEncoder.encode("user-modify-playback-state user-read-playback-state streaming user-read-email user-read-private playlist-read-private", ENCODING)
                 + "&state=" + URLEncoder.encode(generateState(), ENCODING);
@@ -61,7 +60,7 @@ public class AuthenticationRestController {
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("grant_type", "authorization_code");
         requestBody.add("code", code);
-        requestBody.add("redirect_uri", REDIRECT_URI);
+        requestBody.add("redirect_uri", redirectUri);
         requestBody.add("client_id", clientId);
         requestBody.add("client_secret", clientSecret);
 
