@@ -1,4 +1,4 @@
-FROM ubuntu/jre:21-24.04_stable
+FROM optimoz/openjre-21.0.3:0.4
 RUN mkdir /opt/app/
 ADD target/*.jar /opt/app/app.jar
 ENV TZ=Europe/Berlin
