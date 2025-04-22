@@ -1,4 +1,4 @@
-FROM optimoz/openjre-21.0.3:0.4
+FROM quay.balgroupit.com/library/openjdk:21-jre
 RUN mkdir /opt/app/
 ADD target/*.jar /opt/app/app.jar
 ENV TZ=Europe/Berlin
