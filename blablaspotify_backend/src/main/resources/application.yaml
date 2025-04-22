@@ -1,6 +1,8 @@
 spring:
   application:
     name: spring-tutorial-backend
+server:
+  port: ${PORT:8080}
 rest:
   proxy:
     url: ${HTTP_PROXY:}
