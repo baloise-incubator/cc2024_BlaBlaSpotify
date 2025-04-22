@@ -35,6 +35,9 @@ public class AuthenticationRestController {
     @Value("${music.spotify.redirect_uri}")
     private String redirectUri;
 
+    @Value("${frontend_uri}")
+    private String frontendUri;
+
     private final AuthenticationStore authenticationStore;
     private final RestTemplate restTemplate;
 
@@ -75,7 +78,7 @@ public class AuthenticationRestController {
             authenticationStore.setJwtToken(response.getBody());
 
             RedirectView redirectView = new RedirectView();
-            redirectView.setUrl("http://localhost:4200");
+            redirectView.setUrl(frontendUri);
             return redirectView;
         } else {
             throw new RuntimeException();
