@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-tutorial-backend
+rest:
+  proxy:
+    url: ${HTTP_PROXY:}
+blabla:
+  consumer_key: ${SRF_CONSUMER_KEY}
+  consumer_secret: ${SRF_CONSUMER_SECRET}
+music:
+  spotify:
+    client_id: ${SPOTIFY_CLIENT_ID}
+    redirect_uri: ${SPOTIFY_REDIRECT_URI:"http://localhost:8080/spotify/auth/callback"}
+    client_secret: ${SPOTIFY_CLIENT_SECRET}
