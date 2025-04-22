@@ -1,6 +1,7 @@
 package com.baloise.spotify;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 @RestController
 @RequestMapping("/spotify/auth")
 @RequiredArgsConstructor
@@ -74,6 +76,7 @@ public class AuthenticationRestController {
                 String.class
         );
 
+        log.info("Response: status={} body={}", response.getStatusCode(), response.getBody());
         if (response.getStatusCode().is2xxSuccessful()) {
             authenticationStore.setJwtToken(response.getBody());
 
