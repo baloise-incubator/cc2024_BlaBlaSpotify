@@ -1,4 +1,4 @@
-FROM quay.balgroupit.com/library/openjdk:21-jre
+FROM ubuntu/jre:21
 RUN mkdir /opt/app/
 ADD target/*.jar /opt/app/app.jar
 ENV TZ=Europe/Berlin
