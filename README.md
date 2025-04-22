@@ -45,7 +45,7 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 ## Frontend
 1. npm run build
 1. docker build -t blabla-frontend .
-1. docker run -p 4200:8080 blabla-frontend
+1. docker run -e API_URL=https://my.api.server -p 8080:8080 blabla-frontend
 3. docker tag blabla-frontend raffaelheinzer248/blabla-spotify-frontend
 4. docker push raffaelheinzer248/blabla-spotify-frontend
 1. docker rm -f blabla-frontend

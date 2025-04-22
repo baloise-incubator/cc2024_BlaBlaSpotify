@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {EnvService} from '../shared/env.service';
 import { PlaylistList, User } from '../types';
 import { Subscription } from 'rxjs';
 import { createFader } from '../shared/fade.util';
@@ -28,12 +29,13 @@ export class SpotifyService {
 
   fadeSubscription?: Subscription
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private envService: EnvService) {
     this.init()
   }
 
   init() {
-    this.httpClient.get('/api/spotify/auth/token').subscribe({
+    this.httpClient.get(this.envService.apiUrl + '/spotify/auth/token').subscribe({
       next: (data: any) => {
         if (data) {
           this.accessToken = data.access_token;
@@ -49,11 +51,11 @@ export class SpotifyService {
   }
 
   authorize() {
-    window.location.href = '/api/spotify/auth/login';
+    window.location.href = this.envService.apiUrl + '/spotify/auth/login';
   }
 
   private initUser() {
-    this.httpClient.get('/api/spotify/user').subscribe({
+    this.httpClient.get(this.envService.apiUrl + '/spotify/user').subscribe({
       next: (data: any) => {
         this.user = data;
       },
@@ -78,7 +80,7 @@ export class SpotifyService {
       this.player.resume()
     } else {
       this.currentPlayListUrn = urn ? urn : this.nextPlayListUrn
-      this.httpClient.get('/api/spotify/play?uri=' + this.currentPlayListUrn).subscribe({
+      this.httpClient.get(this.envService.apiUrl + '/spotify/play?uri=' + this.currentPlayListUrn).subscribe({
         next: (data: any) => console.log('playlist started'),
         error: (error) => console.error(error)
       });
@@ -115,7 +117,7 @@ export class SpotifyService {
   }
 
   private initPlaylists() {
-    this.httpClient.get('/api/spotify/playlists').subscribe({
+    this.httpClient.get(this.envService.apiUrl + '/spotify/playlists').subscribe({
       next: (data: any) => {
         this.playlistList = data as PlaylistList;
         this.playlistList.items = this.playlistList.items.filter((playlist) => playlist !== null);
