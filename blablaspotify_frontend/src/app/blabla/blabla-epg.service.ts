@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { isAfter, subSeconds } from 'date-fns'
 import { ControlsService } from '../controls/controls.service';
+import {EnvService} from '../shared/env.service';
 import {Program, ProgramDateTimes, ProgramList} from '../types';
 
 @Injectable({ providedIn: 'root' })
@@ -10,6 +11,9 @@ export class BlaBlaEpgService {
     private _controlsService = inject(ControlsService)
     private _httpClient = inject(HttpClient)
     private _subscriptions: Subscription[] = []
+
+    constructor(private envService: EnvService) {
+    }
 
     scheduleBlaBla(programList: ProgramList) {
         console.log('scheduleBlaBla: ', programList);
@@ -46,7 +50,7 @@ export class BlaBlaEpgService {
     }
 
     setProgramGuide(stationId: string) {
-        this._httpClient.get('/api/blabla/programGuides/' + stationId).subscribe({
+        this._httpClient.get(this.envService.apiUrl + '/blabla/programGuides/' + stationId).subscribe({
             next: (response: any) => {
                 this.scheduleBlaBla(response as ProgramList);
             },
