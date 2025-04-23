@@ -76,7 +76,7 @@ public class AuthenticationRestController {
                 String.class
         );
 
-        log.info("Response: status={} body={}", response.getStatusCode(), response.getBody());
+        log.info("Response: status={} body={}", response.getStatusCode());
         if (response.getStatusCode().is2xxSuccessful()) {
             authenticationStore.setJwtToken(response.getBody());
 
