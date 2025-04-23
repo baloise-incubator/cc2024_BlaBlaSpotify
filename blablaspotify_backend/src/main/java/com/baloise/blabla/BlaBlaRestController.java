@@ -40,9 +40,6 @@ public class BlaBlaRestController {
                 byte[].class
         );
 
-        try (GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(response.getBody()));
-             BufferedReader reader = new BufferedReader(new InputStreamReader(gis))) {
-            return new ObjectMapper().readValue(reader, ProgramList.class);
-        }
+        return new ObjectMapper().readValue(response.getBody(), ProgramList.class);
     }
 }

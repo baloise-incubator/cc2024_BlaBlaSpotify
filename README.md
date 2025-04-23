@@ -62,6 +62,7 @@ Mix the your favourite music stream together with the Blabla from a chosen radio
 ## SRGSSR
 - SRF API Program/Lineup: https://developer.srgssr.ch/api-catalog/srgssr-epg-v3
 - SRF API Channels, Streams, etc.: https://developer.srgssr.ch/api-catalog/srgssr-audio-0
+- Log in to developer.srgssr.ch with girafi@gmail.com and $Jf ended with 1
 
 ## Incubator
 - Incubator: https://console.baloise.dev/add/all-namespaces
